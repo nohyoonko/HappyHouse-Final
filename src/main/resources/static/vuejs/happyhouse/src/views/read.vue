@@ -13,6 +13,8 @@
 <script>
 import http from '@/util/http-common';
 import Detail from '@/components/Detail.vue';
+const storage = window.sessionStorage;
+
 export default {
   name: 'read',
   components: {
@@ -24,7 +26,11 @@ export default {
     };
   },
   created() {
-    http.get(`/board/${this.$route.query.no}`,
+    http.get(`/board/${this.$route.query.no}`, {
+                headers: {
+                    "jwt-auth-token": storage.getItem("jwt-auth-token")
+                }
+            }
     ).then(({ data }) => {
       this.item = data;
       console.dir(data);

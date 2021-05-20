@@ -8,7 +8,14 @@
 import Login from "../components/Login.vue";
 
 export default {
-    name: "login",
-    components: { Login },
+    components: { 
+        Login 
+    },
 }
 </script>
+
+<style scoped>
+* {
+    background-color: white;
+}
+</style>

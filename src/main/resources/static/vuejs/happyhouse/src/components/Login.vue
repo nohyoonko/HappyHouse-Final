@@ -1,9 +1,9 @@
 <template>
     <div>
         <label for="userid">아이디</label>
-        <input type="text" name="userid" id="userid" v-model="email" />
+        <input type="text" name="userid" id="userid" v-model="userid" />
         <label for="userpwd">비밀번호</label>
-        <input type="password" name="userpwd" id="userpwd" v-model="password" />
+        <input type="password" name="userpwd" id="userpwd" v-model="userpwd" />
         <input type="submit" value="로그인" id="login" @click="login" />
         <hr>
         <span>
@@ -11,7 +11,7 @@
         </span>
         <hr>
         <button id="getInfo" @click="getInfo">정보확인</button>
-        <button id="logout" @click="logout">로그인</button>
+        <button id="logout" @click="logout">로그아웃</button>
         <hr>
         <table>
             <tr>
@@ -84,11 +84,11 @@ export default {
                 userpwd: this.userpwd,
             }).then(res => {
                 if (res.data.status) {
-                    this.message = res.data.data.email + "로 로그인 되었습니다.";
+                    this.message = res.data.data.userid + "로 로그인 되었습니다.";
                     console.dir(res.headers["jwt-auth-token"]);
                     this.setInfo("성공", res.headers["jwt-auth-token"], JSON.stringify(res.data.data));
                     storage.setItem("jwt-auth-token", res.headers["jwt-auth-token"]);
-                    storage.setItem("login_user", res.data.data.email);
+                    storage.setItem("login_user", res.data.data.userid);
                 } else {
                     this.setInfo("", "", "");
                     this.message("로그인 해주세요");
@@ -108,7 +108,7 @@ export default {
     },
     mounted() {
         this.init();
-    }
+    },
 }
 </script>
 

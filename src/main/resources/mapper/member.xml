@@ -10,6 +10,12 @@
 		where userid = #{userid} and userpwd = #{userpwd}
 	</select>
 	
+	<select id="signin" parameterType="map" resultType="User">
+		select *
+		from member
+		where userid = #{userid} and userpwd = #{userpwd}
+	</select>
+	
 	<insert id="join" parameterType="MemberDto">
 		insert into member (userid, userpwd, username, phone, email, address, joindate)
 		values (#{userid}, #{userpwd}, #{username}, #{phone}, #{email}, #{address}, now())

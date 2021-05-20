@@ -18,7 +18,7 @@ import com.ssafy.happyhouse.model.SidoGugunCodeDto;
 import com.ssafy.happyhouse.model.service.AptMapService;
 
 @RestController
-@RequestMapping("/aptrest")
+@RequestMapping("/api/aptrest")
 public class AptRestController {
 
 	@Autowired
@@ -29,7 +29,6 @@ public class AptRestController {
 		List<SidoGugunCodeDto> list;
 		try {
 			list = aptMapService.getSido();
-			
 			return new ResponseEntity<List<SidoGugunCodeDto>>(list, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();

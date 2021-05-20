@@ -32,11 +32,11 @@ public class JwtInterceptor implements HandlerInterceptor {
 		}
 		else {
 			String token = request.getHeader("jwt-auth-token");
-			if(token != null && token.length() > 0) {
+			if (token != null && token.length() > 0) {
 				jwtService.checkValid(token);
 				log.trace("토큰 사용 가능:{}", token);
 				return true;
-			}else {
+			} else {
 				throw new RuntimeException("인증토큰이 없습니다.");
 			}
 		}

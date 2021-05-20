@@ -1,6 +1,5 @@
 package com.ssafy.happyhouse.model.service;
 
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,7 +7,6 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ssafy.happyhouse.model.MemberDto;
 import com.ssafy.happyhouse.model.User;
 import com.ssafy.happyhouse.model.dao.MemberDao;
 

@@ -23,7 +23,7 @@ public class DemoApplication implements WebMvcConfigurer {
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(jwtInterceptor).addPathPatterns("/api/**")
-		.excludePathPatterns(Arrays.asList("/api/user/**"));
+		.excludePathPatterns(Arrays.asList("/api/user/**", "/api/aptrest/**"));
 	}
 
 	@Override
@@ -35,5 +35,5 @@ public class DemoApplication implements WebMvcConfigurer {
 		.exposedHeaders("jwt-auth-token");
 	}
 	
-	
+
 }

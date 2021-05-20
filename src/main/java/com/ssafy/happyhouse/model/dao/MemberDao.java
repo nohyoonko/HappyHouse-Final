@@ -8,7 +8,7 @@ import com.ssafy.happyhouse.model.User;
 
 public interface MemberDao {
 	public MemberDto login(Map<String, String> map) throws SQLException;
-	public User signin(Map<String,String> map)throws SQLException;
+	public User signin(Map<String,String> map);
 	public int join(MemberDto memberDto);
 	public MemberDto getMember(String userid);
 	public String getPassWord(Map<String, String> map);

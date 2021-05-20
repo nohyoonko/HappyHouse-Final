@@ -41,7 +41,7 @@ public class UserRestController {
 		Map<String,Object> resultMap = new HashMap<>();
 		HttpStatus status = null;
 		try {
-			User loginUser = userService.singin(user.getEmail(), user.getPassword());
+			User loginUser = userService.singin(user.getUserid(), user.getUserpwd());
 			String token = jwtService.create(loginUser);
 			res.setHeader("jwt-auth-token", token);
 			resultMap.put("auth_token", token);

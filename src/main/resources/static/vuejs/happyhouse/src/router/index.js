@@ -9,38 +9,43 @@ import Delete from '@/views/delete.vue';
 
 Vue.use(VueRouter);
 
-const routes= [
-    {
-      path: '/',
-      name: 'index',
-      component: Index,
-    },
-    {
-      path: '/list',
-      name: 'list',
-      component: List,
-    },
-    {
-      path: '/create',
-      name: 'create',
-      component: Create,
-    },
-    {
-      path: '/read',
-      name: 'read',
-      component: Read,
-    },
-    {
-      path: '/update',
-      name: 'update',
-      component: Update,
-    },
-    {
-      path: '/delete',
-      name: 'delete',
-      component: Delete,
-    },
-  ];
+const routes = [
+  {
+    path: '/',
+    name: 'index',
+    component: Index,
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: Login,
+  },
+  {
+    path: '/list',
+    name: 'list',
+    component: List,
+  },
+  {
+    path: '/create',
+    name: 'create',
+    component: Create,
+  },
+  {
+    path: '/read',
+    name: 'read',
+    component: Read,
+  },
+  {
+    path: '/update',
+    name: 'update',
+    component: Update,
+  },
+  {
+    path: '/delete',
+    name: 'delete',
+    component: Delete,
+  },
+];
 
 const router = new VueRouter({
   mode: 'history',

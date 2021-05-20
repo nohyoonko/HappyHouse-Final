@@ -32,6 +32,7 @@
 					<!-- </c:if> -->
           <li class="nav-item" style="color: black; text-decoration: none"><router-link to="/list">Q&A</router-link></li>
 				</ul>
+				<router-link to="/login">로그인</router-link>
 				<!-- <c:if test="${userinfo == null}">
 				<button type="button" class="btn" data-toggle="modal"
 					data-target="#loginModal">로그인</button>

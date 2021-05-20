@@ -29,8 +29,7 @@
 			</div>
 		</article>
 		<!-- 동 검색 끝-->
-		<index-map
-		/>
+		<index-map/>
   </section>
   </div>
 </template>

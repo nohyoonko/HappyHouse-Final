@@ -71,20 +71,19 @@
 						//var n = $(this).data(no); // undefined 나옴...
 						var articleNo = $(trobj).data('no');
 						var param = '?act=get&articleno=' + articleNo;
-						$.get("${pageContext.request.contextPath}/notice/get", {
-							articleno : articleNo}, function(data, status) {
-							console.log(data.subject);
-							$('#articleNo').text(data.articleno);
-							$('#articleSubject').text(data.subject);
-							$('#articleUserId').text(data.userid);
-							$('#articleCount').text(data.count);
-							$('#articleDate').text(data.regtime);
-							$('#articleContent').text(data.content);
-							if ('${userinfo.userid}' != $('#articleUserId')
-									.text()) {
-								$('#delbt').hide();
-								$('#modifybt').hide();
-							}
+						$.get("${pageContext.request.contextPath}/notice/get", 
+								{articleno : articleNo}, function(data, status) {
+								console.log(data.subject);
+								$('#articleNo').text(data.articleno);
+								$('#articleSubject').text(data.subject);
+								$('#articleUserId').text(data.userid);
+								$('#articleCount').text(data.count);
+								$('#articleDate').text(data.regtime);
+								$('#articleContent').text(data.content);
+								if ('${userinfo.userid}' != $('#articleUserId').text()) {
+									$('#delbt').hide();
+									$('#modifybt').hide();
+								}
 							}//each
 						//function
 						, "json");//get

@@ -45,11 +45,10 @@
 			});//ready
 
 	function addInterest() {
-
 		let adress = $('#sido option:checked').text() + " "
 				+ $('#gugun option:checked').text() + " "
 				+ $('#dong option:checked').text();
-		$.get("${pageContext.request.contextPath}/interest/rest/add/"+ adress
+		$.get("${pageContext.request.contextPath}/interest/add/"+ adress
 		, function(data, status) {
 			alert('등록이 완료 되었습니다!');
 		});

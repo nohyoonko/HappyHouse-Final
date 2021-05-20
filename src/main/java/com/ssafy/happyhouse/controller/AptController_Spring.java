@@ -1,24 +1,27 @@
 package com.ssafy.happyhouse.controller;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
-@Controller
+@RestController
 @RequestMapping("/apt")
 public class AptController_Spring {
 
 	@GetMapping("/apt")
-	String apt() {
-		return "apt/apt";
+	public ModelAndView apt() {
+		ModelAndView mav = new ModelAndView("apt/apt");
+		return mav;
 	}
 	
 	@GetMapping("/mvapt")
-	String mvapt(@RequestParam("dong") String dong, Model model) {
+	public ModelAndView mvapt(@RequestParam("dong") String dong) {
 		System.out.println("선택한 동: "+ dong);
-		model.addAttribute("selectDong", dong);
-		return "apt/apt";
+		ModelAndView mav = new ModelAndView("apt/apt");
+		mav.addObject("selectDong", dong);
+		return mav;
 	}
+	
 }

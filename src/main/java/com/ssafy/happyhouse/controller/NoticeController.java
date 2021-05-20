@@ -1,101 +1,115 @@
 package com.ssafy.happyhouse.controller;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.ssafy.happyhouse.model.Board;
 import com.ssafy.happyhouse.model.MemberDto;
 import com.ssafy.happyhouse.model.NoticeDto;
 import com.ssafy.happyhouse.model.service.NoticeService;
 
-@Controller
+@CrossOrigin(origins = { "*" }, maxAge = 6000)
+@RestController
 @RequestMapping("/notice")
 public class NoticeController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(NoticeController.class);
+	private static final String SUCCESS = "success";
+	private static final String FAIL = "fail";
 	
 	@Autowired
 	private NoticeService noticeService;
 
 	@GetMapping("/")
-	private String notice() {
-		return "redirect:/notice/list?key=&word=";
+	private void notice(HttpServletResponse response) throws IOException {
+		response.sendRedirect("/notice/list?key=&word=");
 	}
 
-	
 	@GetMapping("/get")
-	private @ResponseBody NoticeDto getArticle(HttpSession session,int articleno) {
+	private ResponseEntity<NoticeDto> getArticle(HttpSession session, int articleno) {
 		try {
 			NoticeDto noitce = noticeService.getArticle(articleno);
 			noticeService.upPageView(noitce.getArticleno());
-			return noitce;
+			return new ResponseEntity<NoticeDto>(noitce, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
+			return new ResponseEntity<NoticeDto>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		return null;
 	}
 
 	@PostMapping("/write")
-	private String writeArticle(NoticeDto noticeDto, Model model, HttpSession session) {
+	private ModelAndView writeArticle(NoticeDto noticeDto, HttpServletResponse response, HttpSession session) {
 		MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
 		if (memberDto != null) {
 			try {
 				noticeDto.setUserid(memberDto.getUserid());
 				noticeService.writeArticle(noticeDto);
-				return "redirect:/notice/list?key=&word=";
+				notice(response);
+				return null;
 			} catch (Exception e) {
 				e.printStackTrace();
-				model.addAttribute("msg", "글작성중 문제가 발생했습니다.");
-				return "error/error";
+				ModelAndView mav = new ModelAndView();
+				mav.addObject("msg", "글작성중 문제가 발생했습니다.");
+				return mav;
 			}
 		} else {
-			model.addAttribute("msg", "로그인 후 사용 가능한 페이지입니다.");
-			return "error/error";
+			ModelAndView mav = new ModelAndView("error/error");
+			mav.addObject("msg", "로그인 후 사용 가능한 페이지입니다.");
+			return mav;
 		}
 	}
 
 	@GetMapping("/list")
-	private String listArticle(@RequestParam Map<String, String> map, Model model) {
+	private ModelAndView listArticle(@RequestParam Map<String, String> map) {
 		try {
+			ModelAndView mav = new ModelAndView("notice/notice");
 			List<NoticeDto> list = noticeService.listArticle(map);
-			model.addAttribute("articles", list);
-			return "notice/notice";
+			mav.addObject("articles", list);
+			return mav;
 		} catch (Exception e) {
 			e.printStackTrace();
-			model.addAttribute("msg", "공지사항 목록을 얻어오는 중 문제가 발생했습니다.");
-			return "error/error";
+			ModelAndView mav = new ModelAndView("error/error");
+			mav.addObject("msg", "공지사항 목록을 얻어오는 중 문제가 발생했습니다.");
+			return mav;
 		}
 	}
 
 	@GetMapping("/delete/{articleno}")
-	private String deleteArticle(@PathVariable("articleno") int articleno, Model model) {
+	private ModelAndView deleteArticle(@PathVariable("articleno") int articleno, HttpServletResponse response) {
 		try {
 			noticeService.deleteArticle(articleno);
 			logger.debug("삭제 성공!");
-			return "redirect:/notice/list?key=&word=";
+			notice(response);
+			return null;
 		} catch (Exception e) {
 			e.printStackTrace();
-			model.addAttribute("msg", "삭제 중 문제가 발생했습니다.");
-			return "error/error";
+			ModelAndView mav = new ModelAndView("error/error");
+			mav.addObject("msg", "삭제 중 문제가 발생했습니다.");
+			return mav;
 		}
-
 	}
 
 	@PostMapping("/modify")
-	private String modifyArticle(@RequestParam Map<String, String> map) {
+	private void modifyArticle(@RequestParam Map<String, String> map, HttpServletResponse response) throws IOException {
 		NoticeDto noticeDto = new NoticeDto();
 		noticeDto.setArticleno(Integer.parseInt(map.get("articleno")));
 		noticeDto.setSubject(map.get("subject"));
@@ -106,6 +120,6 @@ public class NoticeController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "redirect:/notice/list?key=&word=";
+		notice(response);
 	}
 }

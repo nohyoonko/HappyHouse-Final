@@ -36,7 +36,7 @@ public class UserRestController {
 	private UserService userService;
 	
 	
-	@PostMapping("/user/signin")
+	@PostMapping("/user/login")
 	public ResponseEntity<Map<String,Object>> signin(@RequestBody User user, HttpServletResponse res){
 		Map<String,Object> resultMap = new HashMap<>();
 		HttpStatus status = null;
@@ -44,7 +44,7 @@ public class UserRestController {
 			User loginUser = userService.singin(user.getUserid(), user.getUserpwd());
 			String token = jwtService.create(loginUser);
 			res.setHeader("jwt-auth-token", token);
-			resultMap.put("auth_token", token);
+//			resultMap.put("auth_token", token);
 			System.out.println(token);
 			
 			resultMap.put("status", true);

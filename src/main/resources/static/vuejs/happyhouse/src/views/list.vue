@@ -45,8 +45,14 @@ export default {
     };
   },
   created() {
+    const storage = window.sessionStorage;
     http
-      .get('/board')
+      .get('/board',
+      {
+                headers: {
+                    "jwt-auth-token": storage.getItem("jwt-auth-token")
+                }
+      })
       .then(({ data }) => {
         this.items = data;
       })

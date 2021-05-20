@@ -24,7 +24,8 @@ export default {
     };
   },
   created() {
-    http.get(`/board/${this.$route.query.no}`).then(({ data }) => {
+    http.get(`/board/${this.$route.query.no}`,
+    ).then(({ data }) => {
       this.item = data;
       console.dir(data);
     });

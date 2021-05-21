@@ -6,13 +6,15 @@
 
 <script>
 import { mapState } from 'vuex';
+const aptStore = 'aptStore'
+
 export default {
   name:'indexmap',
   props: {
     //markerlocs: {type: Array, required: true,},
   },
 	computed: {
-		...mapState(['markerlocs']),
+		...mapState(aptStore, ['markerlocs']),
 	},
   mounted() {
     if (window.kakao && window.kakao.maps) {
@@ -41,7 +43,7 @@ export default {
 					var map = new kakao.maps.Map(mapContainer, options)
 					var geocoder = new window.kakao.maps.services.Geocoder()
 					for(var i = 0; i < this.markerlocs.length; i++){
-						var text = this.markerlocs[i]
+						const text = this.markerlocs[i];
 						geocoder.addressSearch(this.markerlocs[i], (result, status) => {
 							if (status === kakao.maps.services.Status.OK) {
 								var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
@@ -57,7 +59,6 @@ export default {
 											// 커스텀 오버레이는 아래와 같이 사용자가 자유롭게 컨텐츠를 구성하고 이벤트를 제어할 수 있기 때문에
 											// 별도의 이벤트 메소드를 제공하지 않습니다
 											var content = '<div class ="label"><span class="left"></span><span class="center">'+text+'</span><span class="right"></span></div>';
-
 											// 마커 위에 커스텀오버레이를 표시합니다
 											// 마커를 중심으로 커스텀 오버레이를 표시하기위해 CSS를 이용해 위치를 설정했습니다
 											var overlay = new kakao.maps.CustomOverlay({

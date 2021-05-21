@@ -49,8 +49,9 @@
       "no-unused-vars": "off"
     },
     "globals": {
-	    "kakao": false
+      "kakao":false
     }
+    
   },
   "browserslist": [
     "> 1%",

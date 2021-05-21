@@ -35,6 +35,9 @@ export default {
       document.head.appendChild(script)
     }
   },
+	updated(){
+		this.initMap();
+	},
   methods: {
 		initMap () {
 					var mapContainer = document.getElementById('map')

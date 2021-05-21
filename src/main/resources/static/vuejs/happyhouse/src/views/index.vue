@@ -66,7 +66,7 @@ export default {
       });
   },
    methods: {
-      ...mapActions(aptStore, ['addMarkerlocs','addSido','addGugun','addDong']),
+      ...mapActions(aptStore, ['setSidoList','setGugunList','setDongList','setAptList','addMarkerlocs','addSido','addGugun','addDong']),
       getGugun() {
          http
       .get(`/aptrest/gugun/${this.selected_sido.sido_Code}`)
@@ -102,9 +102,13 @@ export default {
       .get(`/aptrest/apt/${this.selected_dong.dong}`)
       .then(({ data }) => {
         this.apts = data;
+        this.setSidoList(this.sidos);
+        this.setGugunList(this.guguns);
+        this.setDongList(this.dongs);
 				this.addSido(this.selected_sido);
 				this.addGugun(this.selected_gugun);
 				this.addDong(this.selected_dong);
+        this.setAptList(this.apts);
 				this.$router.push('/apt');
       })
       .catch(() => {

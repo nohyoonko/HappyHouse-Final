@@ -29,7 +29,7 @@
 			</div>
 		</article>
 		<!-- 동 검색 끝-->
-		<index-map/>
+		<index-map v-bind:markerlocs="markerlocs"/>
   </section>
   </div>
 </template>
@@ -42,6 +42,11 @@ export default {
 	components: {
 		IndexMap,
 	},
+	watch: {
+		markerlocs: function() {
+			console.log(this.markerlocs.length);
+		}
+	},
 	data : function() {
 		return {
 			sidos:[],
@@ -51,6 +56,7 @@ export default {
 			dongs:[],
 			selected_dong:'읍/면/동',
 			apts:[],
+			markerlocs:[],
 		};
 	},
 	created() {
@@ -69,6 +75,10 @@ export default {
       .get(`/aptrest/gugun/${this.selected_sido}`)
       .then(({ data }) => {
         this.guguns = data;
+				for(var i = 0; i < this.guguns.length; i++){
+					this.markerlocs[i] = this.selected_sido + this.guguns[i];
+					console.log(this.markerlocs[i]);
+				}
       })
       .catch(() => {
         alert('에러가 발생했습니다.');

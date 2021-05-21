@@ -26,14 +26,4 @@ export default {
   margin: 0;
   text-decoration: none;
 }
-
-.main-body {
-  height: 100%;
-  overflow: hidden;
-  background-image: url("./assets/back.jpg");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  position: relative;
-}
 </style>

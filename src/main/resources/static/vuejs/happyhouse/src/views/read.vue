@@ -27,10 +27,10 @@ export default {
   },
   created() {
     http.get(`/board/${this.$route.query.no}`, {
-                headers: {
-                    "jwt-auth-token": storage.getItem("jwt-auth-token")
-                }
-            }
+      headers: {
+        "jwt-auth-token": storage.getItem("jwt-auth-token")
+      }
+    }
     ).then(({ data }) => {
       this.item = data;
       console.dir(data);

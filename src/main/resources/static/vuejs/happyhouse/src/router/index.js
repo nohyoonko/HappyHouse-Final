@@ -6,6 +6,7 @@ import Create from '@/views/create.vue';
 import Read from '@/views/read.vue';
 import Update from '@/views/update.vue';
 import Delete from '@/views/delete.vue';
+import Apt from '@/views/Apt.vue';
 
 Vue.use(VueRouter);
 
@@ -39,6 +40,11 @@ const routes = [
     path: '/delete',
     name: 'delete',
     component: Delete,
+  },
+  {
+    path: '/apt',
+    name: 'apt',
+    component: Apt,
   },
 ];
 

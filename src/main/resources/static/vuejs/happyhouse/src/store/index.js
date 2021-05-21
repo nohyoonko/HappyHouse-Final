@@ -1,27 +1,14 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import aptStore from '@/store/aptstore.js'
 
 Vue.use(Vuex);
 
-export default new Vuex.Store({
-  state: {
-    markerlocs:[]
+const store = new Vuex.Store({
+  modules: {
+    aptStore: aptStore,
+  },
+})
 
-  },
-  getters: {
-    
-  },
-  mutations: {
-    ADD_MARKERLOCS(state, markerlocs) {
-      console.log('Add_Markerlocs call');
-      state.markerlocs = [];
-      state.markerlocs = markerlocs;
-    }
-  },
-  actions: {
-    addMarkerlocs({ commit }, markerlocs) {
-      commit('ADD_MARKERLOCS', markerlocs);
-    }
-  },
-  modules: {},
-});
+export default store
+

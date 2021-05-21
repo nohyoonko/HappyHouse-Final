@@ -34,8 +34,10 @@
 
 <script>
 import http from '@/util/http-common';
-import { mapActions } from 'vuex';
 import IndexMap from '@/components/IndexMap.vue';
+import { mapActions } from 'vuex';
+const aptStore = 'aptStore'
+
 export default {
    name: 'index',
    components: {
@@ -64,7 +66,7 @@ export default {
       });
   },
    methods: {
-      ...mapActions(['addMarkerlocs']),
+      ...mapActions(aptStore, ['addMarkerlocs','addSido','addGugun','addDong']),
       getGugun() {
          http
       .get(`/aptrest/gugun/${this.selected_sido.sido_Code}`)
@@ -95,11 +97,15 @@ export default {
         alert('에러가 발생했습니다.');
       });
       },
-      getApt(){
+      mvapt(){
          http
       .get(`/aptrest/apt/${this.selected_dong.dong}`)
       .then(({ data }) => {
         this.apts = data;
+				this.addSido(this.selected_sido);
+				this.addGugun(this.selected_gugun);
+				this.addDong(this.selected_dong);
+				this.$router.push('/apt');
       })
       .catch(() => {
         alert('에러가 발생했습니다.');

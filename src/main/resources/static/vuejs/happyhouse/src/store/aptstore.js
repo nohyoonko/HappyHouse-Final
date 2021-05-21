@@ -1,6 +1,7 @@
 const aptStore = {
   namespaced: true,
   state: {
+    markerlocs:[],
     apts: [],
     apt: Object,
   },

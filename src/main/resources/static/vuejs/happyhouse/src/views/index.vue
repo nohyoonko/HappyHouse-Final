@@ -34,8 +34,10 @@
 
 <script>
 import http from '@/util/http-common';
-import { mapActions } from 'vuex';
 import IndexMap from '@/components/IndexMap.vue';
+import { mapActions } from 'vuex';
+const aptStore = 'aptStore'
+
 export default {
    name: 'index',
    components: {
@@ -64,7 +66,7 @@ export default {
       });
   },
    methods: {
-      ...mapActions(['addMarkerlocs','addSido','addGugun','addDong']),
+      ...mapActions(aptStore, ['addMarkerlocs','addSido','addGugun','addDong']),
       getGugun() {
          http
       .get(`/aptrest/gugun/${this.selected_sido.sido_Code}`)

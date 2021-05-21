@@ -2,7 +2,7 @@
   <header class="container-fluid bg-light">
     <b-container class="bg-light">
       <b-navbar toggleable="lg" variant="light">
-        <b-navbar-brand tag="h1"><router-link class="brand" to="/"><b-icon-house-door-fill /> HappyHouse</router-link></b-navbar-brand>
+        <b-navbar-brand tag="h1" style="margin-bottom: 0;"><router-link class="brand" to="/"><b-icon-house-door-fill /> HappyHouse</router-link></b-navbar-brand>
 
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
@@ -19,18 +19,19 @@
           </b-navbar-nav>
 
           <!-- Right aligned nav items -->
-          <b-navbar-nav class="ml-auto">
-            <b-nav-item @click="showModal = true">로그인</b-nav-item>
-            <b-nav-item><router-link to="/join">회원가입</router-link></b-nav-item>
-        <b-nav-item><router-link to="/notice">공지사항</router-link></b-nav-item>
-            
-        <b-nav-item-dropdown right>
-              <!-- Using 'button-content' slot -->
-              <template #button-content>사용자</template>
-          <b-dropdown-item><router-link to="/profile" class="drop">프로필</router-link></b-dropdown-item>
-          <b-dropdown-item><router-link to="/logout" class="drop">로그아웃</router-link></b-dropdown-item>
-              </b-nav-item-dropdown>
-          </b-navbar-nav>
+        <b-navbar-nav class="ml-auto">
+          <b-nav-item @click="showModal = true" v-if="loginName === ''">로그인</b-nav-item>
+          <b-nav-item><router-link to="/join" v-if="loginName === ''">회원가입</router-link></b-nav-item>
+          <b-nav-item><router-link to="/notice">공지사항</router-link></b-nav-item>
+          <b-nav-item-dropdown right v-if="loginName !== ''">
+            <!-- Using 'button-content' slot -->
+            <template #button-content>
+              <img src="../assets/person.png" class="rounded-circle" />
+              {{ loginName }} 님</template>
+            <b-dropdown-item><router-link to="/profile" class="drop">프로필</router-link></b-dropdown-item>
+            <b-dropdown-item @click="logout" class="drop">로그아웃</b-dropdown-item>
+          </b-nav-item-dropdown>
+        </b-navbar-nav>
         </b-collapse>
       </b-navbar>
 
@@ -42,14 +43,22 @@
 
 <script>
 import loginModal from '../components/user/loginModal.vue';
+const storage = window.sessionStorage;
 
 export default {
   components: { loginModal },
   name: 'AppHeader',
   data() {
     return {
-      showModal: false
+      showModal: false,
+      loginName: storage.getItem('login_user'),
     }
+  },
+  methods: {
+    logout() {
+      storage.setItem("jwt-auth-token", "");
+      storage.setItem("login_user", "");
+    },
   },
 };
 </script>

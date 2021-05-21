@@ -42,24 +42,23 @@
           <div class="modal-body">
             <slot name="body">
               	<form id="loginform" method="post">
-					<div class="form-group">
-						<label for="usr">ID:</label> <input type="text"
-							class="form-control" id="userid" name="userid" placeholder="Enter ID" />
-					</div>
-					<div class="form-group">
-						<label for="pwd">Password:</label> <input type="password"
-							class="form-control" id="userpwd" name="userpwd" placeholder="Enter Password" />
-					</div>
-				</form>
+                  <div class="form-group">
+                    <label for="userid">ID:</label>
+                    <input type="text" v-model="userid" class="form-control" id="userid" name="userid" placeholder="Enter ID" />
+                  </div>
+                  <div class="form-group">
+                    <label for="userpwd">Password:</label>
+                    <input type="password" v-model="userpwd" class="form-control" id="userpwd" name="userpwd" placeholder="Enter Password" />
+                  </div>
+                </form>
             </slot>
           </div>
 
           <div class="modal-footer">
             <slot name="footer">
-              	<b-button variant="danger" @click="mvfindPwd">비밀번호 찾기</b-button>
-				<button type="button" class="btn btn-primary" @click="$emit('close')"
-					id="loginBt" onclick="javascript:login();">LogIn</button>
-				<button type="button" class="btn btn-secondary" @click="$emit('close')">Close</button>
+              	<button type="button" class="btn btn-info">비밀번호 찾기</button>
+				        <button type="button" class="btn btn-primary" @click="login">LogIn</button>
+				        <button type="button" class="btn btn-secondary" @click="$emit('close')">Close</button>
             </slot>
           </div>
         </div>
@@ -70,7 +69,6 @@
 
 <script>
 import http from '@/util/http-common';
-
 // 토큰 및 사용자 정보를 저장하기 위해 세션 스토리지 사용.
 const storage = window.sessionStorage;
 
@@ -90,12 +88,6 @@ export default {
             this.status = status;
             this.token = token;
             this.info = info;
-        },
-        logout() {
-            storage.setItem("jwt-auth-token", "");
-            storage.setItem("login_user", "");
-            this.message = "로그인 해주세요.";
-            this.setInfo("로그아웃 성공", "", "");
         },
         getInfo() {
             http.post("/info",
@@ -126,14 +118,16 @@ export default {
                     console.dir(res.headers["jwt-auth-token"]);
                     this.setInfo("성공", res.headers["jwt-auth-token"], JSON.stringify(res.data.data));
                     storage.setItem("jwt-auth-token", res.headers["jwt-auth-token"]);
-                    storage.setItem("login_user", res.data.data.userid);
+                    storage.setItem("login_user", res.data.data.username);
+                    this.$emit('close');
                 } else {
                     this.setInfo("", "", "");
                     this.message("로그인 해주세요");
-                    alert("입력 정보를 확인하세요.");
                 }
             }).catch(err => {
                 this.setInfo("실패", "", JSON.stringify(err.res || err.message));
+                alert("로그인 실패!");
+                this.$emit('close');
             })
         },
         init() {
@@ -160,7 +154,7 @@ export default {
   height: 100%;
   background-color: rgba(0, 0, 0, .5);
   display: table;
-  transition: opacity .3s ease;
+  /* transition: opacity .3s ease; */
 }
 
 .modal-wrapper {
@@ -169,7 +163,7 @@ export default {
 }
 
 .modal-container {
-  width: 40%;
+  width: 450px;
   margin: 0px auto;
   padding: 20px 30px;
   background-color: #fff;

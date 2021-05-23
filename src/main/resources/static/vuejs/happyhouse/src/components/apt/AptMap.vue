@@ -1,12 +1,8 @@
 <template>
   <b-row id="index-map" class="justify-content-center">
     <b-col id="map" cols="8" class="mb-5" style="width: 80vw; height: 50vh"></b-col>
-    <div class="map_wrap">
-      <div
-        id="map"
-        style="width: 100%; height: 500px; margin: auto; position: relative; overflow: hidden"
-      ></div>
-      <ul id="category">
+    
+      <!-- <ul id="category">
         <li id="BK9" data-order="0">
           <span class="category_bg bank"></span>
           은행
@@ -31,8 +27,8 @@
           <span class="category_bg store"></span>
           편의점
         </li>
-      </ul>
-    </div>
+      </ul> -->
+
   </b-row>
 </template>
 
@@ -61,6 +57,7 @@ export default {
   },
   watch: {
     markerlocs: function () {
+      //alert("watching markerlocs");
       this.initMap();
     },
   },
@@ -76,8 +73,8 @@ export default {
       var map = new kakao.maps.Map(mapContainer, options);
       var geocoder = new window.kakao.maps.services.Geocoder();
       for (var i = 0; i < this.markerlocs.length; i++) {
-        const text = this.markerlocs[i];
-        geocoder.addressSearch(this.markerlocs[i], (result, status) => {
+        const text = this.markerlocs[i].addrtext;
+        geocoder.addressSearch(this.markerlocs[i].addr, (result, status) => {
           if (status === kakao.maps.services.Status.OK) {
             var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
             points[cnt++] = coords;
@@ -142,7 +139,6 @@ export default {
 		// 	var obValueView = document.getElementById("slider_value_view");
 		// 	obValueView.innerHTML = sVal
 		// },
-
   },
 };
 </script>

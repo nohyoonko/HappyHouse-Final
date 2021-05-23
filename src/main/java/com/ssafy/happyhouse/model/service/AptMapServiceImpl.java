@@ -1,13 +1,16 @@
 package com.ssafy.happyhouse.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ssafy.happyhouse.model.AptDealDto;
 import com.ssafy.happyhouse.model.AptInfoDto;
+import com.ssafy.happyhouse.model.HousePageBean;
 import com.ssafy.happyhouse.model.SidoGugunCodeDto;
 import com.ssafy.happyhouse.model.dao.AptMapDao;
 
@@ -33,13 +36,13 @@ public class AptMapServiceImpl implements AptMapService {
 	}
 
 	@Override
-	public List<AptInfoDto> getAptInDong(String dong) throws Exception {
-		return sqlSession.getMapper(AptMapDao.class).getAptInDong(dong);
+	public List<AptInfoDto> getAptInDong(Map<String, String> map) throws Exception {
+		return sqlSession.getMapper(AptMapDao.class).getAptInDong(map);
 	}
 
 	@Override
-	public List<AptDealDto> getAptDealInfo(String AptName) throws Exception {
-		return sqlSession.getMapper(AptMapDao.class).getAptDealInfo(AptName);
+	public List<AptDealDto> getAptDealInfo(HousePageBean hpb) throws Exception {
+		return sqlSession.getMapper(AptMapDao.class).getAptDealInfo(hpb);
 	}
 
 }

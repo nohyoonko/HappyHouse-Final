@@ -26,19 +26,40 @@
 		ORDER BY dong
 	</select>
 
-	<select id="getAptInDong" parameterType="String"
+	<select id="getAptInDong" parameterType="map"
 		resultType="AptInfoDto">
 		SELECT no,dong,AptName,code,jibun,buildYear 
 		FROM houseinfo 
 		WHERE dong = #{dong}
+		<if test="aptname != null">
+			and AptName LIKE concat('%', #{aptname}, '%')
+		</if>
 	</select>
 	
-	<select id="getAptDealInfo" parameterType="String"
+	<select id="getAptDealInfo" parameterType="HousePageBean"
 		resultType="AptDealDto" >
-		select AptName, dealAmount, area, type, dealYear, dealMonth, dealDay 
-		from housedeal 
-		WHERE AptName = #{AptName}
-		ORDER BY dealAmount desc
+		<![CDATA[
+		select no, dong, AptName, code, dealAmount, buildYear, dealYear, dealMonth, dealDay, area, floor, jibun, type, rentMoney
+		from housedeal
+		where dong=#{dong}
+		]]>
+		<if test="aptname != null">
+			and Aptname LIKE concat('%', #{aptname}, '%')
+		</if>
+		
+		<if test="max > 0" >
+			<![CDATA[
+				and cast( replace(dealAmount, ',', '') as signed integer) <= #{max}
+				and cast( replace(dealAmount, ',', '') as signed integer) >= #{min}
+			]]>
+		</if>
+
+		<if test="sort == 1">
+			order by dealAmount desc
+		</if>
+		<if test="sort != 1">
+			order by dealAmount asc
+		</if>
 	</select>
 	
 

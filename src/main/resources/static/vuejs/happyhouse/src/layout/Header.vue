@@ -43,7 +43,8 @@
 
 <script>
 import loginModal from '../components/user/loginModal.vue';
-const storage = window.sessionStorage;
+import { createNamespacedHelpers } from 'vuex';
+const userHelper = createNamespacedHelpers('userStore');
 
 export default {
   components: { loginModal },
@@ -51,15 +52,16 @@ export default {
   data() {
     return {
       showModal: false,
-      loginName: storage.getItem('login_user'),
     }
   },
   methods: {
-    logout() {
-      storage.setItem("jwt-auth-token", "");
-      storage.setItem("login_user", "");
-    },
+    ...userHelper.mapActions(['logout'])
   },
+  computed: {
+    ...userHelper.mapState({
+      loginName: state => state.loginUser.name
+    })
+  }
 };
 </script>
 
@@ -70,11 +72,13 @@ a {
 }
 
 a:focus, :hover {
-	color: rgba(0, 0, 0, 0.7);;
+	color: rgba(0, 0, 0, 0.7);
+  text-decoration: none;
 }
 
 a:active {
-	color: rgba(0, 0, 0, 0.9);;
+	color: rgba(0, 0, 0, 0.9);
+  text-decoration: none;
 }
 
 .brand, .drop {

@@ -1,33 +1,4 @@
 <template>
-    <!-- <div>
-        <label for="userid">아이디</label>
-        <input type="text" name="userid" id="userid" v-model="userid" />
-        <label for="userpwd">비밀번호</label>
-        <input type="password" name="userpwd" id="userpwd" v-model="userpwd" />
-        <input type="submit" value="로그인" id="login" @click="login" />
-        <hr>
-        <span>
-            사용자 정보: <span>{{message}}</span>
-        </span>
-        <hr>
-        <button id="getInfo" @click="getInfo">정보확인</button>
-        <button id="logout" @click="logout">로그아웃</button>
-        <hr>
-        <table>
-            <tr>
-                <th>상태</th>
-                <td id="status">{{status}}</td>
-            </tr>
-            <tr>
-                <th>토큰</th>
-                <td id="token">{{token}}</td>
-            </tr>
-            <tr>
-                <th>정보</th>
-                <td id="info">{{info}}</td>
-            </tr>
-        </table>
-    </div> -->
   <transition name="modal">
     <div class="modal-mask">
       <div class="modal-wrapper">
@@ -57,7 +28,7 @@
           <div class="modal-footer">
             <slot name="footer">
               	<button type="button" class="btn btn-info">비밀번호 찾기</button>
-				        <button type="button" class="btn btn-primary" @click="login">LogIn</button>
+				        <button type="button" class="btn btn-primary" @click="callLogin">LogIn</button>
 				        <button type="button" class="btn btn-secondary" @click="$emit('close')">Close</button>
             </slot>
           </div>
@@ -69,26 +40,20 @@
 
 <script>
 import http from '@/util/http-common';
+import { mapActions } from 'vuex';
 // 토큰 및 사용자 정보를 저장하기 위해 세션 스토리지 사용.
 const storage = window.sessionStorage;
+const userStore = 'userStore';
 
 export default {
     data() {
         return {
             userid: "",
             userpwd: "",
-            message: "로그인 해주세요.",
-            status: "",
-            token: "",
-            info: ""
         }
     },
     methods: {
-        setInfo(status, token, info) {
-            this.status = status;
-            this.token = token;
-            this.info = info;
-        },
+        ...mapActions(userStore, ['login']),
         getInfo() {
             http.post("/info",
             {
@@ -105,41 +70,11 @@ export default {
                 this.setInfo("정보 조회 실패", "", err.res.data.message);
             })
         },
-        login() {
-            storage.setItem("jwt-auth-token", "");
-            storage.setItem("login_user", "");
-            http.post("/user/login", 
-            {
-                userid: this.userid,
-                userpwd: this.userpwd,
-            }).then(res => {
-                if (res.data.status) {
-                    this.message = res.data.data.userid + "로 로그인 되었습니다.";
-                    console.dir(res.headers["jwt-auth-token"]);
-                    this.setInfo("성공", res.headers["jwt-auth-token"], JSON.stringify(res.data.data));
-                    storage.setItem("jwt-auth-token", res.headers["jwt-auth-token"]);
-                    storage.setItem("login_user", res.data.data.username);
-                    this.$emit('close');
-                } else {
-                    this.setInfo("", "", "");
-                    this.message("로그인 해주세요");
-                }
-            }).catch(err => {
-                this.setInfo("실패", "", JSON.stringify(err.res || err.message));
-                alert("로그인 실패!");
-                this.$emit('close');
-            })
+        callLogin() {
+          const user = [this.userid, this.userpwd];
+          this.login(user);
+          this.$emit('close');
         },
-        init() {
-            if (storage.getItem("jwt-auth-token")) {
-                this.message = storage.getItem("login_user")+ "로 로그인 되었습니다.";
-            } else {
-                storage.setItem("jwt-auth-token", "");
-            }
-        }
-    },
-    mounted() {
-        this.init();
     },
 }
 </script>

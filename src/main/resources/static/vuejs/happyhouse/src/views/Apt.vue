@@ -7,12 +7,17 @@
     </b-row>
     <apt-search-bar />
     <b-row>
-      <b-col cols="6" align="left">
+      <b-col cols="8" align="left">
         <apt-map />
       </b-col>
-      <b-col cols="6">
-        <apt-list />
-        <!-- <apt-detail /> -->
+      <b-col cols="4">
+        <div class="apt-list" style="overflow: scroll; height: 500px">
+				<!-- <div style="display: none">현재 존재하는 집이 없습니다.</div> -->
+          <apt-list />
+		    </div>
+      </b-col>
+      <b-col>
+        <apt-detail />
       </b-col>
     </b-row>
   </b-container>
@@ -22,15 +27,15 @@
 import AptSearchBar from '@/components/apt/AptSearchBar.vue';
 import AptMap from '@/components/apt/AptMap.vue';
 import AptList from '@/components/apt/AptList.vue';
-// import AptDetail from '@/components/apt/AptDetail.vue';
+import AptDetail from '@/components/apt/AptDetail.vue';
 
 export default {
   name: 'Apt',
   components: {
     AptSearchBar,
     AptList,
-    //AptDetail,
     AptMap,
+    AptDetail,
   },
   data() {
     return {};

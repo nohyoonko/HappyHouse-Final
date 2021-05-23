@@ -43,8 +43,8 @@ export default {
 					var map = new kakao.maps.Map(mapContainer, options)
 					var geocoder = new window.kakao.maps.services.Geocoder()
 					for(var i = 0; i < this.markerlocs.length; i++){
-						const text = this.markerlocs[i];
-						geocoder.addressSearch(this.markerlocs[i], (result, status) => {
+						const text = this.markerlocs[i].addrtext;
+						geocoder.addressSearch(this.markerlocs[i].addr, (result, status) => {
 							if (status === kakao.maps.services.Status.OK) {
 								var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
 								points[cnt++] = coords;

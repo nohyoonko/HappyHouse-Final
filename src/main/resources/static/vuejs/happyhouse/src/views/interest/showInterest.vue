@@ -2,7 +2,7 @@
   <b-container class="bv-example-row">
     <b-row>
       <b-col>
-        <h2>아파트 매매 정보</h2>
+        <h2>관심지역 정보보기</h2>
       </b-col>
     </b-row>
     <b-row>
@@ -10,7 +10,7 @@
         <interest-map />
       </b-col>
       <b-col cols="4">
-        <div class="interest-list" style="overflow: scroll; height: 500px">
+        <div class="interest-list" style="overflow: scroll; height: 400px">
 				 <interest-list />
 		    </div>
       </b-col>

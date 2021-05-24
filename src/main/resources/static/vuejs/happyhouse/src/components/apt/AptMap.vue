@@ -1,8 +1,13 @@
 <template>
   <b-row id="index-map" class="justify-content-center">
-    <b-col id="map" cols="8" class="mb-5" style="width: 80vw; height: 50vh"></b-col>
-    
-      <!-- <ul id="category">
+    <b-col
+      id="map"
+      cols="8"
+      class="mb-5"
+      style="width: 80vw; height: 50vh"
+    ></b-col>
+
+    <!-- <ul id="category">
         <li id="BK9" data-order="0">
           <span class="category_bg bank"></span>
           은행
@@ -28,30 +33,29 @@
           편의점
         </li>
       </ul> -->
-
   </b-row>
 </template>
 
 <script>
-import { mapState } from 'vuex';
-const aptStore = 'aptStore'
+import { mapState } from "vuex";
+const aptStore = "aptStore";
 
 export default {
-  name: 'aptmap',
+  name: "aptmap",
   props: {
     //markerlocs: {type: Array, required: true,},
   },
   computed: {
-    ...mapState(aptStore, ['markerlocs']),
+    ...mapState(aptStore, ["markerlocs"]),
   },
   mounted() {
     if (window.kakao && window.kakao.maps) {
       this.initMap();
     } else {
-      const script = document.createElement('script');
+      const script = document.createElement("script");
       script.onload = () => kakao.maps.load(this.initMap);
       script.src =
-        'http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=b80b9f0e805429d445e5a1dd888a722f&libraries=services';
+        "http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=b80b9f0e805429d445e5a1dd888a722f&libraries=services";
       document.head.appendChild(script);
     }
   },
@@ -63,7 +67,7 @@ export default {
   },
   methods: {
     initMap() {
-      var mapContainer = document.getElementById('map');
+      var mapContainer = document.getElementById("map");
       var options = {
         center: new kakao.maps.LatLng(36.331522, 127.0306),
         level: 4,
@@ -102,7 +106,7 @@ export default {
             overlay.setVisible(false);
 
             // 마커를 클릭했을 때 커스텀 오버레이를 표시합니다
-            kakao.maps.event.addListener(marker, 'click', function () {
+            kakao.maps.event.addListener(marker, "click", function () {
               if (overlay.getVisible() == true) {
                 overlay.setVisible(false);
               } else {
@@ -125,20 +129,20 @@ export default {
           map.setBounds(bounds);
         }); //addressSearch
       }
-			//RangeSlider();
-    },//initMap
-		// RangeSlider(){
-		// 	var range = document.getElementsByClassName('slider_range');
+      //RangeSlider();
+    }, //initMap
+    // RangeSlider(){
+    // 	var range = document.getElementsByClassName('slider_range');
 
-		// 	range.on('input', function(){		
-		// 		ShowSliderValue(this.value);
-		// 	});
-		// },
-		// ShowSliderValue(sVal)
-		// {
-		// 	var obValueView = document.getElementById("slider_value_view");
-		// 	obValueView.innerHTML = sVal
-		// },
+    // 	range.on('input', function(){
+    // 		ShowSliderValue(this.value);
+    // 	});
+    // },
+    // ShowSliderValue(sVal)
+    // {
+    // 	var obValueView = document.getElementById("slider_value_view");
+    // 	obValueView.innerHTML = sVal
+    // },
   },
 };
 </script>
@@ -152,7 +156,7 @@ export default {
   vertical-align: top;
 }
 .label .left {
-  background: url('https://t1.daumcdn.net/localimg/localimages/07/2011/map/storeview/tip_l.png')
+  background: url("https://t1.daumcdn.net/localimg/localimages/07/2011/map/storeview/tip_l.png")
     no-repeat;
   display: inline-block;
   height: 24px;
@@ -169,7 +173,7 @@ export default {
   line-height: 24px;
 }
 .label .right {
-  background: url('https://t1.daumcdn.net/localimg/localimages/07/2011/map/storeview/tip_r.png') -1px
+  background: url("https://t1.daumcdn.net/localimg/localimages/07/2011/map/storeview/tip_r.png") -1px
     0 no-repeat;
   display: inline-block;
   height: 24px;

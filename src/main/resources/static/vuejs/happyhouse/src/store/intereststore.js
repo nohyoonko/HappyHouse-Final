@@ -6,6 +6,7 @@ const interestStore = {
   state: {
     interests: [],
     interest: Object,
+    topinterest: [],
   },
   getters: {
     get_interests(state) {
@@ -18,6 +19,9 @@ const interestStore = {
     },
     SET_INTEREST(state, interest) {
       state.interest = interest;
+    },
+    SET_TOP_FIVE_INTERESTS(state, topinterests) {
+      state.topinterests = topinterests;
     }
   },
   actions: {
@@ -80,6 +84,16 @@ const interestStore = {
     setInterest({ commit }, interest) {
       commit('SET_INTEREST', interest);
     },
+    getTopFive({ commit }) {
+      http
+        .get('/interest')
+        .then(({ data }) => {
+          commit('SET_TOP_FIVE_INTERESTS', data);
+        })
+        .catch(() => {
+          alert('인기 동네를 불러오는데 실패했습니다.');
+        });
+    }
 
   },
   // plugins: [createPersistedState()],

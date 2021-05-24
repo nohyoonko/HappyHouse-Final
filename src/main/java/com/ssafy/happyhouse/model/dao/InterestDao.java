@@ -10,4 +10,5 @@ public interface InterestDao {
 	public List<InterestDto> listInterest(String userid) throws SQLException;
 	public InterestDto getInterest(String userid) throws SQLException;
 	public void deleteInterest(InterestDto interestDto) throws SQLException;
+	public List<InterestDto> listTopFiveInterest() throws SQLException;
 }

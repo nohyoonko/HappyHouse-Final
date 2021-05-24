@@ -21,5 +21,12 @@
 		delete from interest
 		where userid = #{userid} and address = #{address}
 	</delete>
+	
+	<select id="listTopFiveInterest" resultType="InterestDto">
+		select address, count(*) from interest
+		group by address
+		order by count(*) desc
+		limit 0,5;
+	</select>
 
 </mapper>

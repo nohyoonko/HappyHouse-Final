@@ -2,7 +2,6 @@
   <b-row id="index-map" class="justify-content-center">
     <b-col
       id="map"
-      cols="8"
       class="mb-5"
       style="width: 80vw; height: 50vh"
     ></b-col>

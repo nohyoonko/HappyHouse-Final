@@ -74,6 +74,9 @@ const userStore = {
       storage.setItem('login_user', '');
       commit('LOGOUT');
     },
+    join({ commit }, user) {
+      http.post('/user/join');
+    },
   },
 };
 

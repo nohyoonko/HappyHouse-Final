@@ -1,7 +1,6 @@
 <template>
-  <b-row>
-    <b-col cols="3"/>
-    <b-col cols="6">
+  <b-container>
+    <h2 class="text-center">Q&A</h2>
     <div v-if="items.length" class="board-list">
       <table class="table table-bordered table-condensed">
         <colgroup>
@@ -30,9 +29,7 @@
     <div class="text-right">
       <button class="btn btn-primary" @click="movePage">등록</button>
     </div>
-    </b-col>
-    <b-col cols="3" />
-  </b-row>
+  </b-container>
 </template>
 
 <script>

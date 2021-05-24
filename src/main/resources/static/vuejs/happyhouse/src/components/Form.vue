@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <b-container>
     <div class="form-group">
       <label for="writer">작성자</label>
       <input
@@ -44,7 +44,7 @@
       <button class="btn btn-primary" v-else @click="checkHandler">수정</button>
       <button class="btn btn-primary" @click="moveList">목록</button>
     </div>
-  </div>
+  </b-container>
 </template>
 
 <script>

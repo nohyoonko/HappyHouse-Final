@@ -54,22 +54,22 @@ export default {
     },
     methods: {
         ...mapActions(userStore, ['login']),
-        getInfo() {
-            http.post("/info",
-            {
-                userid: "some@email.com",
-                userpwd: "some password"
-            },
-            {
-                headers: {
-                    "jwt-auth-token": storage.getItem("jwt-auth-token")
-                }
-            }).then(res => {
-                this.setInfo("정보 조회 성공", res.headers.auth_token, JSON.stringify(res.data));
-            }).catch(err => {
-                this.setInfo("정보 조회 실패", "", err.res.data.message);
-            })
-        },
+        // getInfo() {
+        //     http.post("/info",
+        //     {
+        //         userid: "some@email.com",
+        //         userpwd: "some password"
+        //     },
+        //     {
+        //         headers: {
+        //             "jwt-auth-token": storage.getItem("jwt-auth-token")
+        //         }
+        //     }).then(res => {
+        //         this.setInfo("정보 조회 성공", res.headers.auth_token, JSON.stringify(res.data));
+        //     }).catch(err => {
+        //         this.setInfo("정보 조회 실패", "", err.res.data.message);
+        //     })
+        // },
         callLogin() {
           const user = [this.userid, this.userpwd];
           this.login(user);
@@ -89,7 +89,7 @@ export default {
   height: 100%;
   background-color: rgba(0, 0, 0, .5);
   display: table;
-  /* transition: opacity .3s ease; */
+  transition: opacity .3s ease;
 }
 
 .modal-wrapper {
@@ -98,7 +98,8 @@ export default {
 }
 
 .modal-container {
-  width: 450px;
+  width: 30vw;
+  min-width: 350px;
   margin: 0px auto;
   padding: 20px 30px;
   background-color: #fff;

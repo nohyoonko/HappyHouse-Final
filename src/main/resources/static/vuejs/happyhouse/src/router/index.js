@@ -7,9 +7,9 @@ import Read from '@/views/read.vue';
 import Update from '@/views/update.vue';
 import Delete from '@/views/delete.vue';
 import Apt from '@/views/Apt.vue';
-import Interest from '@/views/interest/interest.vue'
-import AddInterest from '@/views/interest/addInterest.vue'
-import ShowInterest from '@/views/interest/showInterest.vue'
+import Interest from '@/views/interest/interest.vue';
+import AddInterest from '@/views/interest/addInterest.vue';
+import ShowInterest from '@/views/interest/showInterest.vue';
 
 Vue.use(VueRouter);
 
@@ -49,16 +49,16 @@ const routes = [
     name: 'apt',
     component: Apt,
   },
-      {
-        path: '/showInterest',
-        name: 'ShowInterest',
-        component: ShowInterest,
-      },
-      {
-        path: '/addInterest',
-        name: 'addInterest',
-        component: AddInterest,
-      },
+  {
+    path: '/showInterest',
+    name: 'ShowInterest',
+    component: ShowInterest,
+  },
+  {
+    path: '/addInterest',
+    name: 'addInterest',
+    component: AddInterest,
+  },
 ];
 
 const router = new VueRouter({

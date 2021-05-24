@@ -1,6 +1,8 @@
 <template>
     <tr>
-      <td>{{aptdeal.aptName}}</td>
+      <td>{{aptdeal.aptName}}
+        <span v-if="aptdeal.floor != null"> {{aptdeal.floor}}층</span>
+      </td>
       <td>{{aptdeal.dealAmount}}</td>
       <td>{{aptdeal.area}}</td>
       <td>매매</td>

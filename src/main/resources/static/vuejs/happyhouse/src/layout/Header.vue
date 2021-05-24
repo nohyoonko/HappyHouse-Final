@@ -12,8 +12,8 @@
               <b-dropdown-item><router-link to="/apt" class="drop">매매/전월세</router-link></b-dropdown-item>
             </b-nav-item-dropdown>
         <b-nav-item-dropdown text="관심지역">
-              <b-dropdown-item><router-link to="/interest" class="drop">관심지역 등록</router-link></b-dropdown-item>
-          <b-dropdown-item><router-link to="/interest"  class="drop">관심지역 보기</router-link></b-dropdown-item>
+              <b-dropdown-item><router-link to="/addInterest" class="drop">관심지역 등록</router-link></b-dropdown-item>
+          <b-dropdown-item><router-link to="/showInterest"  class="drop">관심지역 보기</router-link></b-dropdown-item>
             </b-nav-item-dropdown>
         <b-nav-item><router-link class="routerlink secondary" to="/list">Q&A</router-link></b-nav-item>
           </b-navbar-nav>

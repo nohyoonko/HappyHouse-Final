@@ -1,4 +1,5 @@
 import http from '@/util/http-common';
+const storage = window.sessionStorage;
 
 const aptStore = {
   namespaced: true,
@@ -8,12 +9,13 @@ const aptStore = {
     guguns: [],
     dongs: [],
     apts: [],
-    aptdeals:[],
+    aptdeals: [],
     apt: Object,
     selected_sido: Object,
     selected_gugun: Object,
     selected_dong: Object,
     searchName: Object,
+    interests:[],
   },
   getters: {
     get_selected_gugun(state) {
@@ -86,7 +88,10 @@ const aptStore = {
     },
     SET_APTDEALS(state, aptdeals) {
       state.aptdeals = aptdeals;
-    }
+    },
+    SET_INTERESTS(state, interests) {
+      state.interests = interests;
+    },
   },
   actions: {
     addSido({ commit }, selected_sido) {
@@ -121,14 +126,52 @@ const aptStore = {
     },
     setAptDeals({ commit }, searchdealInfo) {
       http
-      .get(`/aptrest/dealInfo`,{params : searchdealInfo})
-      .then(({ data }) => {
-        commit('SET_APTDEALS',data);
+        .get(`/aptrest/dealInfo`, { params: searchdealInfo })
+        .then(({ data }) => {
+          commit('SET_APTDEALS', data);
+        })
+        .catch(() => {
+          alert('에러가 발생했습니다.');
+        });
+    },
+    addInterest({ commit }, addr) {
+      http
+        .post('/interest', {
+          userid: storage.getItem("login_user"),
+          address: addr,
+        },
+          {
+            headers: {
+              "jwt-auth-token": storage.getItem("jwt-auth-token")
+            }
+          })
+        .then(({ data }) => {
+          let msg = '관심지역 등록 처리시 문제가 발생했습니다.';
+          if (data === 'success') {
+            msg = '관심지역 등록이 완료되었습니다.';
+          }
+          alert(msg);
+        })
+        .catch(() => {
+          alert('등록 처리시 에러가 발생했습니다.');
+        });
+    },
+    getInterestareas({ commit }) {
+      http
+        .get('/interest/'+storage.getItem("login_user"),
+      {
+                headers: {
+                    "jwt-auth-token": storage.getItem("jwt-auth-token")
+                }
       })
-      .catch(() => {
-        alert('에러가 발생했습니다.');
-      });
-    }
+        .then(({ data }) => {
+          commit('SET_INTERESTS', data);
+        })
+        .catch(() => {
+          alert('등록 처리시 에러가 발생했습니다.');
+        });
+    },
+
   },
   // plugins: [createPersistedState()],
 };

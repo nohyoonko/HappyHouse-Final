@@ -1,6 +1,6 @@
 <template>
   <b-row id="index-map" class="justify-content-center">
-		<b-col id="map" cols="8" class="mb-5" style="width:80vw;height:50vh"></b-col>
+		<b-col id="map" class="mb-5 ml-2 mr-2" style="width:80vw;height:50vh"></b-col>
   </b-row>
 </template>
 

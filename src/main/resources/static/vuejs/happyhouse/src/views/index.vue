@@ -158,7 +158,7 @@ export default {
 
 <style scoped>
 .form-group {
-  width: 200px;
+  width: 180px;
 }
 .main-body {
   height: 100%;

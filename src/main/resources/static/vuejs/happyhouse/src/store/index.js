@@ -4,6 +4,7 @@ import createPersistedState from 'vuex-persistedstate';
 
 import aptStore from '@/store/aptstore.js';
 import userStore from '@/store/userstore.js';
+import interestStore from '@/store/intereststore.js';
 
 Vue.use(Vuex);
 
@@ -77,6 +78,7 @@ const store = new Vuex.Store({
   modules: {
     aptStore: aptStore,
     userStore: userStore,
+    interestStore: interestStore,
   },
 
   plugins: [

@@ -1,5 +1,7 @@
 <template>
-  <div>
+  <b-row>
+    <b-col cols="3"/>
+    <b-col cols="6">
     <div v-if="items.length" class="board-list">
       <table class="table table-bordered table-condensed">
         <colgroup>
@@ -28,7 +30,9 @@
     <div class="text-right">
       <button class="btn btn-primary" @click="movePage">등록</button>
     </div>
-  </div>
+    </b-col>
+    <b-col cols="3" />
+  </b-row>
 </template>
 
 <script>

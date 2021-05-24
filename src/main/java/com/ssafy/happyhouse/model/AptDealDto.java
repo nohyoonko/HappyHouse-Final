@@ -8,6 +8,7 @@ public class AptDealDto {
 	private String area;
 	private String dealAmount;
 	private String type;
+	private String floor;
 	private String dealYear;
 	private String dealMonth;
 	private String dealDay;
@@ -50,6 +51,15 @@ public class AptDealDto {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	
+	public String getFloor() {
+		return floor;
+	}
+
+	public void setFloor(String floor) {
+		this.floor = floor;
 	}
 
 	public String getDealYear() {

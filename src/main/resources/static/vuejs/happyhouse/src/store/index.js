@@ -1,5 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import createPersistedState from 'vuex-persistedstate';
+
 import aptStore from '@/store/aptstore.js';
 import userStore from '@/store/userstore.js';
 
@@ -76,6 +78,12 @@ const store = new Vuex.Store({
     aptStore: aptStore,
     userStore: userStore,
   },
+
+  plugins: [
+    createPersistedState({
+      paths: ['userStore'],
+    }),
+  ],
 });
 
 export default store;

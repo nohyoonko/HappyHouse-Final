@@ -4,7 +4,8 @@ const storage = window.sessionStorage;
 const interestStore = {
   namespaced: true,
   state: {
-    interests:[],
+    interests: [],
+    interest: Object,
   },
   getters: {
     get_interests(state) {
@@ -15,6 +16,9 @@ const interestStore = {
     SET_INTERESTS(state, interests) {
       state.interests = interests;
     },
+    SET_INTEREST(state, interest) {
+      state.interest = interest;
+    }
   },
   actions: {
     addInterest({ commit }, addr) {
@@ -40,7 +44,6 @@ const interestStore = {
         });
     },
     getInterests({ commit }) {
-      alert("get호출");
       http
         .get('/interest/'+storage.getItem("login_user"),
       {
@@ -49,7 +52,6 @@ const interestStore = {
                 }
       })
         .then(({ data }) => {
-          alert("then");
           commit('SET_INTERESTS', data);
         })
         .catch(() => {
@@ -74,7 +76,10 @@ const interestStore = {
       .catch(() => {
         alert('삭제 처리시 에러가 발생했습니다.');
       });
-    }
+    },
+    setInterest({ commit }, interest) {
+      commit('SET_INTEREST', interest);
+    },
 
   },
   // plugins: [createPersistedState()],

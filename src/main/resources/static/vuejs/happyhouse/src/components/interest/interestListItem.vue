@@ -4,7 +4,7 @@
     <div class="text-right">
       <button
         class="btn btn-success mr-1"
-        @click.prevent="setInterest"
+        @click.prevent="chooseInterest"
       >
         지도에서 확인
       </button>
@@ -34,20 +34,14 @@ export default {
     interest: Object,
   },
   methods: {
-    ...mapActions(interestStore, ['setApt', 'deleteInterest','getInterests']),
-    chooseApt() {
-      this.setApt(this.apt);
-    },
-    showInfo(flag) {
-      this.isInfo = flag;
+    ...mapActions(interestStore, ['setInterest', 'deleteInterest','getInterests']),
+    chooseInterest() {
+      this.setInterest(this.interest);
     },
     async delInterest() {
       await this.deleteInterest(this.interest);
       await this.getInterests();
     },
-    setInterest() {
-
-    }
   },
 };
 </script>

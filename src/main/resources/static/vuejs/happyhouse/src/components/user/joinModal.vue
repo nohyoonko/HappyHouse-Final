@@ -186,7 +186,6 @@ export default {
                 if (!result) {
                     return;
                 }
-                console.log(this.form);
                 this.join(this.form);
                 this.$emit('close');
             });

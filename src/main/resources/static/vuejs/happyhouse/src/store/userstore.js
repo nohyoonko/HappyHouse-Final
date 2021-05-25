@@ -16,7 +16,6 @@ const userStore = {
   getters: {},
   mutations: {
     INIT(state) {
-      console.log(state.loginUser);
       if (storage.getItem('login_user') === null) {
         state.loginUser.id = '';
         state.loginUser.name = '';
@@ -75,7 +74,6 @@ const userStore = {
       commit('LOGOUT');
     },
     join({ commit }, user) {
-      console.log(user);
       http
         .post('/member/join', user)
         .then(() => {
@@ -83,6 +81,16 @@ const userStore = {
         })
         .catch(() => {
           alert('회원가입 실패!');
+        });
+    },
+    findpwd({ commit }, info) {
+      http
+        .post('/member/findpwd', info)
+        .then((res) => {
+          alert(res.data);
+        })
+        .catch(() => {
+          alert('비밀번호를 찾을 수 없습니다.');
         });
     },
   },

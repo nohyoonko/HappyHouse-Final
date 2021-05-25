@@ -33,12 +33,26 @@
       <!-- 동 검색 끝-->
       <index-map />
     </section>
+    <section style="background-color:white; padding: 20px;">
+      <b-row class="mt-3 mb-3">
+        <b-col cols="3"/>
+        <b-col cols="3" align="center">
+          <h3 class="mt3">지금 가장 인기있는 oo동의 </h3>
+          <h3 class="mb-3">매물 구경하기 <b-icon icon="hand-index" font-scale="2"></b-icon></h3>
+
+          <index-interest-chart />
+        </b-col>
+        <b-col cols="6">
+        </b-col>
+      </b-row>
+    </section>
   </div>
 </template>
 
 <script>
 import http from '@/util/http-common';
-import IndexMap from '@/components/IndexMap.vue';
+import IndexMap from '@/components/index/IndexMap.vue';
+import IndexInterestChart from '@/components/index/IndexInterestChart.vue';
 import { mapActions } from 'vuex';
 const aptStore = 'aptStore';
 
@@ -46,6 +60,7 @@ export default {
   name: 'index',
   components: {
     IndexMap,
+    IndexInterestChart,
   },
   data: function () {
     return {

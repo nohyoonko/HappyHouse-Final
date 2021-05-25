@@ -36,4 +36,9 @@ public class InterestServiceImpl implements InterestService {
 		sqlSession.getMapper(InterestDao.class).deleteInterest(interestDto);
 	}
 
+	@Override
+	public List<InterestDto> listTopFiveInterest() throws Exception {
+		return sqlSession.getMapper(InterestDao.class).listTopFiveInterest();
+	}
+
 }

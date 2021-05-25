@@ -9,4 +9,5 @@ public interface InterestService {
 	public List<InterestDto> listInterest(String userid) throws Exception;
 	public InterestDto getInterest(String userid) throws Exception;
 	public void deleteInterest(InterestDto interestDto) throws Exception;
+	public List<InterestDto> listTopFiveInterest() throws Exception;
 }

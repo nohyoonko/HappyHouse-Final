@@ -38,26 +38,26 @@ public class InterestRestController {
 	@Autowired
 	InterestService interestService;
 	
-	@GetMapping("/mvadd")
-	ModelAndView mvadd() {
-		ModelAndView mav = new ModelAndView("interest/addInterest");
-		return mav;
-	}
-	
-	@GetMapping
-	ModelAndView mvlist(HttpSession session) {
-		ModelAndView mav = new ModelAndView("interest/showInterest");
-		MemberDto user = (MemberDto) session.getAttribute("userinfo");
-		String userid = user.getUserid();
-		try {
-			List<InterestDto> list = interestService.listInterest(userid);
-			session.setAttribute("interestList", list);
-			return mav;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return new ModelAndView("error/error");
-	}
+//	@GetMapping("/mvadd")
+//	ModelAndView mvadd() {
+//		ModelAndView mav = new ModelAndView("interest/addInterest");
+//		return mav;
+//	}
+//	
+//	@GetMapping
+//	ModelAndView mvlist(HttpSession session) {
+//		ModelAndView mav = new ModelAndView("interest/showInterest");
+//		MemberDto user = (MemberDto) session.getAttribute("userinfo");
+//		String userid = user.getUserid();
+//		try {
+//			List<InterestDto> list = interestService.listInterest(userid);
+//			session.setAttribute("interestList", list);
+//			return mav;
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		return new ModelAndView("error/error");
+//	}
 	@GetMapping("/{userid}")
 	public ResponseEntity<List<InterestDto>> getlist(@PathVariable String userid) throws Exception {
 		logger.debug("getlist - 호출");
@@ -96,6 +96,21 @@ public class InterestRestController {
 			e.printStackTrace();
 		}
 		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+	}
+	
+	@GetMapping
+	public ResponseEntity<List<InterestDto>> listTopFiveInterest() throws Exception {
+		logger.debug("getlist - 호출");
+		List<InterestDto> list;
+		try {
+			list = interestService.listTopFiveInterest();
+			for(int i = 0; i < list.size(); i++)
+				System.out.println(list.get(i));
+			return new ResponseEntity<List<InterestDto>>(list, HttpStatus.OK);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
 }

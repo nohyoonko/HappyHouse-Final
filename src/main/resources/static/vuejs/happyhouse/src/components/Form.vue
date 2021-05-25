@@ -34,13 +34,7 @@
       ></textarea>
     </div>
     <div class="text-right">
-      <button
-        class="btn btn-primary"
-        v-if="type == 'create'"
-        @click="checkHandler"
-      >
-        등록
-      </button>
+      <button class="btn btn-primary" v-if="type == 'create'" @click="checkHandler">등록</button>
       <button class="btn btn-primary" v-else @click="checkHandler">수정</button>
       <button class="btn btn-primary" @click="moveList">목록</button>
     </div>
@@ -55,7 +49,7 @@ export default {
   props: {
     type: { type: String },
   },
-  data: function() {
+  data: function () {
     return {
       no: '',
       regtime: '',
@@ -68,34 +62,30 @@ export default {
     checkHandler() {
       let err = true;
       let msg = '';
-      !this.writer &&
-        ((msg = '작성자를 입력해주세요'),
-        (err = false),
-        this.$refs.writer.focus());
-      err &&
-        !this.title &&
-        ((msg = '제목 입력해주세요'), (err = false), this.$refs.title.focus());
+      !this.writer && ((msg = '작성자를 입력해주세요'), (err = false), this.$refs.writer.focus());
+      err && !this.title && ((msg = '제목 입력해주세요'), (err = false), this.$refs.title.focus());
       err &&
         !this.content &&
-        ((msg = '내용 입력해주세요'),
-        (err = false),
-        this.$refs.content.focus());
+        ((msg = '내용 입력해주세요'), (err = false), this.$refs.content.focus());
 
       if (!err) alert(msg);
       else this.type == 'create' ? this.createHandler() : this.updateHandler();
     },
     createHandler() {
       http
-        .post('/board', {
-          writer: this.writer,
-          title: this.title,
-          content: this.content,
-        },
-      {
-                headers: {
-                    "jwt-auth-token": storage.getItem("jwt-auth-token")
-                }
-      })
+        .post(
+          '/board',
+          {
+            writer: this.writer,
+            title: this.title,
+            content: this.content,
+          },
+          {
+            headers: {
+              'jwt-auth-token': storage.getItem('jwt-auth-token'),
+            },
+          }
+        )
         .then(({ data }) => {
           let msg = '등록 처리시 문제가 발생했습니다.';
           if (data === 'success') {
@@ -110,18 +100,21 @@ export default {
     },
     updateHandler() {
       http
-        .put(`/board/${this.no}`, {
-          no: this.no,
-          regtime: this.regtime,
-          writer: this.writer,
-          title: this.title,
-          content: this.content,
-        },
-      {
-                headers: {
-                    "jwt-auth-token": storage.getItem("jwt-auth-token")
-                }
-      })
+        .put(
+          `/board/${this.no}`,
+          {
+            no: this.no,
+            regtime: this.regtime,
+            writer: this.writer,
+            title: this.title,
+            content: this.content,
+          },
+          {
+            headers: {
+              'jwt-auth-token': storage.getItem('jwt-auth-token'),
+            },
+          }
+        )
         .then(({ data }) => {
           let msg = '수정 처리시 문제가 발생했습니다.';
           if (data === 'success') {
@@ -141,12 +134,11 @@ export default {
   created() {
     if (this.type === 'update') {
       http
-        .get(`/board/${this.$route.query.no}`,
-      {
-                headers: {
-                    "jwt-auth-token": storage.getItem("jwt-auth-token")
-                }
-      })
+        .get(`/board/${this.$route.query.no}`, {
+          headers: {
+            'jwt-auth-token': storage.getItem('jwt-auth-token'),
+          },
+        })
         .then(({ data }) => {
           this.no = data.no;
           this.regtime = data.regtime;

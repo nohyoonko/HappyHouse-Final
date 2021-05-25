@@ -16,7 +16,6 @@ const userStore = {
   getters: {},
   mutations: {
     INIT(state) {
-      console.log(state.loginUser);
       if (storage.getItem('login_user') === null) {
         state.loginUser.id = '';
         state.loginUser.name = '';

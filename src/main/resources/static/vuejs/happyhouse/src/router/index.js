@@ -6,8 +6,12 @@ import Create from '@/views/create.vue';
 import Read from '@/views/read.vue';
 import Update from '@/views/update.vue';
 import Delete from '@/views/delete.vue';
+import NoticeList from '@/views/notice/list.vue';
+// import Notice from '@/views/notice/notice.vue';
+// import NoticeWrite from '@/views/notice/create.vue';
+// import NoticeDetail from '@/views/notice/read.vue';
+// import NoticeUpdate from '@/views/notice/update.vue';
 import Apt from '@/views/Apt.vue';
-import Interest from '@/views/interest/interest.vue';
 import AddInterest from '@/views/interest/addInterest.vue';
 import ShowInterest from '@/views/interest/showInterest.vue';
 
@@ -58,6 +62,11 @@ const routes = [
     path: '/addInterest',
     name: 'addInterest',
     component: AddInterest,
+  },
+  {
+    path: '/notice',
+    name: 'notice',
+    component: NoticeList,
   },
 ];
 

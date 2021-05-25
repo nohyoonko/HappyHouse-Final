@@ -40,6 +40,10 @@ export default {
             }
           }]
         },
+        onClick: function(point, event) {
+          if(event.length <= 0) return;
+          console.log(event[0]['label'])
+        },
         legend: {
             display: true
           },
@@ -77,7 +81,7 @@ export default {
       console.log("길이: " + this.topinterests.length);
       for(let i = 0; i < this.topinterests.length; i++){
         this.datacollection.labels[i] = this.topinterests[i].address;
-        this.datacollection.data[i] = this.topinterests[i].count;
+        this.datacollection.datasets[0].data[i] = this.topinterests[i].count;
       };
     },
   },

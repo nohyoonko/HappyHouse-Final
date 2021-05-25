@@ -23,7 +23,7 @@
 	</delete>
 	
 	<select id="listTopFiveInterest" resultType="InterestDto">
-		select address, count(*) from interest
+		select address, count(*) as count from interest
 		group by address
 		order by count(*) desc
 		limit 0,5;

@@ -6,7 +6,7 @@ const interestStore = {
   state: {
     interests: [],
     interest: Object,
-    topinterest: [],
+    topinterests: [],
   },
   getters: {
     get_interests(state) {
@@ -21,6 +21,7 @@ const interestStore = {
       state.interest = interest;
     },
     SET_TOP_FIVE_INTERESTS(state, topinterests) {
+      console.log("mutation");
       state.topinterests = topinterests;
     }
   },
@@ -82,10 +83,11 @@ const interestStore = {
       });
     },
     setInterest({ commit }, interest) {
-      commit('SET_INTEREST', interest);
+      commit('SET_INTEREST', interest)
     },
-    getTopFive({ commit }) {
-      http
+    async getTopFive({ commit }) {
+      console.log("actions");
+      await http
         .get('/interest')
         .then(({ data }) => {
           commit('SET_TOP_FIVE_INTERESTS', data);

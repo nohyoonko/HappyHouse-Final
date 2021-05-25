@@ -13,7 +13,7 @@ export default {
         labels: ['January', 'February', 'March', 'April', 'May'],
         datasets: [
           {
-            label: 'Data One',
+            label: '관심지역 선호도',
             backgroundColor: '#f87979',
             pointBackgroundColor: 'white',
             borderWidth: 1,
@@ -49,6 +49,7 @@ export default {
     }
   },
   mounted() {
+    
     //renderChart function renders the chart with the datacollection and options object.
     this.renderChart(this.datacollection, this.options)
   },
@@ -58,12 +59,27 @@ export default {
   computed:{
     ...mapState(interestStore,['topinterests'])
   },
+  watch: {
+    topinterests : function(){
+      this.makedata();
+      this.renderChart(this.datacollection, this.options);
+    }
+  },
   methods: {
     ...mapActions(interestStore,['getTopFive']),
-    getTopFiveInterests(){
-      this.getTopFive();
-      console.log(this.topinterests.length);
-    }
+    async getTopFiveInterests(){
+      await this.getTopFive();
+    },
+    makedata(){
+
+      this.datacollection.labels = [];
+      this.datacollection.data = [];
+      console.log("길이: " + this.topinterests.length);
+      for(let i = 0; i < this.topinterests.length; i++){
+        this.datacollection.labels[i] = this.topinterests[i].address;
+        this.datacollection.data[i] = this.topinterests[i].count;
+      };
+    },
   },
 }
 </script>

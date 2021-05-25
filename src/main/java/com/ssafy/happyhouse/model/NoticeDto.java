@@ -59,4 +59,9 @@ public class NoticeDto {
 		this.regtime = regtime;
 	}
 
+	@Override
+	public String toString() {
+		return this.subject +", " + this.content + ", " + userid;
+	}
+	
 }

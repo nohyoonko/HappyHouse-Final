@@ -1,5 +1,5 @@
 <template>
-  <footer>
+  <footer id="footer">
 	<b-navbar type="dark">
 		<b-navbar-nav class="ml-auto">
 			<b-nav-item href="#">사이트소개</b-nav-item>
@@ -21,5 +21,11 @@ export default {
 <style scoped>
 .navbar {
 	background-color: rgb(65, 43, 28);
+}
+#footer {
+    position: fixed;
+    bottom:0;
+    width: 100%;
+		z-index: 4;
 }
 </style>

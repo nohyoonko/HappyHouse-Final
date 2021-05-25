@@ -23,6 +23,7 @@ public class NoticeServiceImpl implements NoticeService {
 
 	@Override
 	public void writeArticle(NoticeDto noticeDto) throws Exception {
+		System.out.println(noticeDto);
 		if (noticeDto.getSubject() == null || noticeDto.getContent() == null) {
 			throw new Exception();
 		}

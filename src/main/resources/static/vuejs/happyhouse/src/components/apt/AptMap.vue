@@ -67,10 +67,12 @@ export default {
   methods: {
     initMap() {
       var mapContainer = document.getElementById("map");
+
       var options = {
-        center: new kakao.maps.LatLng(36.331522, 127.0306),
-        level: 4,
+        center: new kakao.maps.LatLng(37.5642135, 127.0016985),
+        level: 8,
       };
+      
       var points = [];
       var cnt = 0;
       var map = new kakao.maps.Map(mapContainer, options);
@@ -130,18 +132,6 @@ export default {
       }
       //RangeSlider();
     }, //initMap
-    // RangeSlider(){
-    // 	var range = document.getElementsByClassName('slider_range');
-
-    // 	range.on('input', function(){
-    // 		ShowSliderValue(this.value);
-    // 	});
-    // },
-    // ShowSliderValue(sVal)
-    // {
-    // 	var obValueView = document.getElementById("slider_value_view");
-    // 	obValueView.innerHTML = sVal
-    // },
   },
 };
 </script>

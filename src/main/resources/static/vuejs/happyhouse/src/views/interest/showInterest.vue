@@ -10,7 +10,7 @@
         <interest-map />
       </b-col>
       <b-col cols="4">
-        <div class="interest-list" style="overflow: scroll; height: 400px">
+        <div class="interest-list" style="overflow: scroll; height: 600px">
 				 <interest-list />
 		    </div>
       </b-col>

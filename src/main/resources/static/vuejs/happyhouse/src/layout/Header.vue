@@ -28,7 +28,7 @@
             <template #button-content>
               <b-avatar variant="dark" size="sm"></b-avatar> {{ loginName }} 님</template>
             <b-dropdown-item><router-link to="/profile" class="drop">프로필</router-link></b-dropdown-item>
-            <b-dropdown-item @click="logout" class="drop">로그아웃</b-dropdown-item>
+            <b-dropdown-item @click="callLogout" class="drop">로그아웃</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
         </b-collapse>
@@ -57,13 +57,16 @@ export default {
     }
   },
   methods: {
-    ...userHelper.mapActions(['logout', 'join'])
+    ...userHelper.mapActions(['logout', 'join']),
+    callLogout() {
+      this.logout().then(() => this.$router.push('/'))
+    }
   },
   computed: {
     ...userHelper.mapState({
       loginName: state => state.loginUser.name
     })
-  }
+  },
 };
 </script>
 

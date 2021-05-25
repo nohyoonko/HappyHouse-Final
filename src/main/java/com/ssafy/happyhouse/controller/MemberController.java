@@ -2,6 +2,8 @@ package com.ssafy.happyhouse.controller;
 
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.happyhouse.model.MemberDto;
@@ -52,22 +55,26 @@ public class MemberController {
 //		return "index";
 //	}
 //	
-//	@PostMapping("/findPwd")
-//	private String findPwd(@RequestParam Map<String, String> map, Model model) {
-//		try {
-//			String userpwd = memberService.getPassWord(map);
-//			if(userpwd != null) {
-//				model.addAttribute("find", "비밀번호는 " + userpwd + " 입니다.");
-//			} else {
-//				model.addAttribute("find", "비밀번호를 찾을 수 없습니다.");
-//			}
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			model.addAttribute("find", "비밀번호를 찾는 중 문제가 생겼습니다.");
-//			return "error/error";
-//		}
-//		return "index";
-//	}
+	@PostMapping("/findpwd")
+	private ResponseEntity<String> findPwd(@RequestBody Map<String, String> map) {
+		String result = null;
+		HttpStatus status = null;
+		
+		try {
+			String userpwd = memberService.getPassWord(map);
+			if (userpwd != null) {
+				result = "비밀번호는 " + userpwd + " 입니다.";
+				status = HttpStatus.OK;
+			} else {
+				status = HttpStatus.NO_CONTENT;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = "비밀번호를 찾는 중 문제가 생겼습니다.";
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+		}
+		return new ResponseEntity<String>(result, status);
+	}
 //
 //	@PostMapping("/delete/{userid}")
 //	private String delete(@PathVariable("userid") String userid) {

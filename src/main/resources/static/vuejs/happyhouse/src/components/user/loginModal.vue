@@ -27,8 +27,9 @@
 
           <div class="modal-footer">
             <slot name="footer">
-              	<button type="button" class="btn btn-info">비밀번호 찾기</button>
-				        <button type="button" class="btn btn-primary" @click="callLogin">LogIn</button>
+              	<b-button v-b-modal.findPwdModal variant="info">비밀번호 찾기</b-button>
+				        <find-pwd-modal></find-pwd-modal>
+                <button type="button" class="btn btn-primary" @click="callLogin">LogIn</button>
 				        <button type="button" class="btn btn-secondary" @click="$emit('close')">Close</button>
             </slot>
           </div>
@@ -41,6 +42,8 @@
 <script>
 import http from '@/util/http-common';
 import { mapActions } from 'vuex';
+import FindPwdModal from './findPwdModal.vue';
+
 // 토큰 및 사용자 정보를 저장하기 위해 세션 스토리지 사용.
 const storage = window.sessionStorage;
 const userStore = 'userStore';
@@ -51,6 +54,9 @@ export default {
             userid: "",
             userpwd: "",
         }
+    },
+    components: {
+        FindPwdModal
     },
     methods: {
         ...mapActions(userStore, ['login']),
@@ -82,7 +88,7 @@ export default {
 <style scoped>
 .modal-mask {
   position: fixed;
-  z-index: 9998;
+  z-index: 2;
   top: 0;
   left: 0;
   width: 100%;

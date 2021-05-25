@@ -75,7 +75,15 @@ const userStore = {
       commit('LOGOUT');
     },
     join({ commit }, user) {
-      http.post('/user/join');
+      console.log(user);
+      http
+        .post('/member/join', user)
+        .then(() => {
+          alert('회원가입 성공!');
+        })
+        .catch(() => {
+          alert('회원가입 실패!');
+        });
     },
   },
 };

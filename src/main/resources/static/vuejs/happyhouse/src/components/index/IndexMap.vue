@@ -35,8 +35,8 @@ export default {
 		initMap () {
 					var mapContainer = document.getElementById('map')
 					var options = {
-						center: new kakao.maps.LatLng(36.331522, 127.030600),
-						level: 4
+						center: new kakao.maps.LatLng(37.5642135, 127.0016985),
+						level: 8
 					}
 					var points = [];
 					var cnt = 0;

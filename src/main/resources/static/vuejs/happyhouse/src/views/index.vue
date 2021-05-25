@@ -33,13 +33,14 @@
       <!-- 동 검색 끝-->
       <index-map />
     </section>
-    <section style="background-color:white; padding: 20px;">
+    <section  style="background-color:white; padding: 20px;">
       <b-row class="mt-3 mb-3">
         <b-col cols="3"/>
         <b-col cols="3" align="center">
-          <h3 class="mt3">지금 가장 인기있는 oo동의 </h3>
-          <h3 class="mb-3">매물 구경하기 <b-icon icon="hand-index" font-scale="2"></b-icon></h3>
-
+          <div @click="showTopApts">
+          <h3 class="mt3">지금 가장 인기있는 {{top}}의 </h3>
+          <h3 class="mb-3">매물 구경하기 <b-icon icon="hand-index" font-scale="1"></b-icon></h3>
+          </div>
           <index-interest-chart />
         </b-col>
         <b-col cols="6">
@@ -53,8 +54,9 @@
 import http from '@/util/http-common';
 import IndexMap from '@/components/index/IndexMap.vue';
 import IndexInterestChart from '@/components/index/IndexInterestChart.vue';
-import { mapActions } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 const aptStore = 'aptStore';
+const interestStore = 'interestStore';
 
 export default {
   name: 'index',
@@ -72,7 +74,18 @@ export default {
       selected_dong: null,
       apts: [],
       locs: [],
+      top:'',
     };
+  },
+  computed: {
+    ...mapState(interestStore,['topinterests'])
+  },
+  watch:{
+    topinterests : function() {
+      let topone = this.topinterests[0].address+'';
+      var jbSplit = topone.split(' ');
+      this.top = jbSplit[2];
+    }
   },
   created() {
     http
@@ -166,6 +179,14 @@ export default {
         .catch(() => {
           alert('에러가 발생했습니다.');
         });
+    },
+    showTopApts(){
+      let topone = this.topinterests[0].address+'';
+      var jbSplit = topone.split(' ');
+      this.addSido(jbSplit[0]);
+      this.addGugun(jbSplit[1]);
+      this.addDong(jbSplit[2]);
+      this.$router.push("/apt");
     },
   },
 };

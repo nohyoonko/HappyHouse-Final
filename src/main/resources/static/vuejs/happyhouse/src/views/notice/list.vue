@@ -110,6 +110,7 @@ export default {
       showDetailModal: false,
 			selField:'articleno',
 			word:'',
+      pageIndex: 0,
     };
   },
   computed: {
@@ -131,6 +132,7 @@ export default {
   watch: {
     flag: function () {
       this.getList();
+       this.$router.push('/notice?' + this.pageIndex++)
     },
   },
   created: function () {

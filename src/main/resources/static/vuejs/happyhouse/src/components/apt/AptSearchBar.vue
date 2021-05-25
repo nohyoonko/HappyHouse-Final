@@ -5,7 +5,7 @@
     <article id="searchbar-article" class="mt-5 justify-content-center ">
       <div class="form-group" id="menu1">
         <b-form-select name="city" id="sido" @change="getGugun" v-model="selected_sido">
-          <option value="null" disabled>도/광역시</option>
+          <option selected value="null" key="0" disabled>도/광역시</option>
           <option v-for="sido in sidos" :key="sido.sido_Code" :value="sido">
             {{ sido.sido_Name }}
           </option>
@@ -13,7 +13,7 @@
       </div>
       <div class="form-group ml-2" id="menu2">
         <b-form-select name="city" id="gugun" @change="getDong" v-model="selected_gugun">
-          <option value="null" disabled>시/구</option>
+          <option selected value="null" key="0" disabled>시/구</option>
           <option v-for="gugun in guguns" :key="gugun.gugun_Code" :value="gugun">
             {{ gugun.gugun_Name }}
           </option>
@@ -21,7 +21,7 @@
       </div>
       <div class="form-group ml-2" id="menu3">
         <b-form-select name="city" id="dong" @change="dongclick" v-model="selected_dong">
-          <option value="null" disabled>읍/면/동</option>
+          <option selected value="null" key="0" disabled>읍/면/동</option>
           <option v-for="dong in dongs" :key="dong.dong" :value="dong">{{ dong.dong }}</option>
         </b-form-select>
       </div>
@@ -127,9 +127,6 @@ export default {
     };
   },
   created() {
-    if(this.selected_sido == null || this.selected_sido == ''){
-      this.reset();
-    }
     http
       .get(`/aptrest/sido`)
       .then(({ data }) => {
@@ -138,6 +135,9 @@ export default {
       .catch(() => {
         alert('에러가 발생했습니다.');
       });
+      if(this.selected_sido == null || this.selected_sido.sido_Code == ''){
+          this.reset();
+    }
   },
   methods: {
     ...aptListHelper.mapActions([

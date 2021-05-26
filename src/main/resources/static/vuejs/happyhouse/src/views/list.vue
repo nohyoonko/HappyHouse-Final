@@ -4,12 +4,8 @@
     <b-row>
       <b-col lg="7"></b-col>
       <b-col lg="2" align="right" class="p-0">
-        <b-form-group v-model="sortDirection" class="mb-0" v-slot="{ ariaDescribedby }">
-          <b-form-checkbox-group
-            v-model="filterOn"
-            :aria-describedby="ariaDescribedby"
-            class="mt-2"
-          >
+        <b-form-group class="mb-0">
+          <b-form-checkbox-group v-model="filterOn" class="mt-2">
             <b-form-checkbox value="title">제목</b-form-checkbox>
             <b-form-checkbox value="writer">작성자</b-form-checkbox>
           </b-form-checkbox-group>
@@ -53,20 +49,19 @@
           <template #header>
             <h5 class="mb-0">{{ row.item.title }}</h5>
             <span class="ml-auto">
-              <b-button
-                v-if="row.item.writer === loginId"
-                variant="outline-warning"
-                class="mr-1"
-                size="sm"
-                >수정</b-button
-              >
-
-              <b-button
-                v-if="row.item.writer === loginId"
-                @click="deleteBoard(row.item.no)"
-                variant="outline-danger"
-                size="sm"
-                >삭제</b-button
+              <router-link :to="'/update?no=' + row.item.no">
+                <b-button
+                  v-if="row.item.writer === loginId"
+                  variant="outline-warning"
+                  class="mr-1"
+                  size="sm"
+                  >수정</b-button
+                >
+              </router-link>
+              <router-link :to="'/delete?no=' + row.item.no">
+                <b-button v-if="row.item.writer === loginId" variant="outline-danger" size="sm"
+                  >삭제</b-button
+                ></router-link
               >
             </span>
           </template>
@@ -81,7 +76,7 @@
             >
           </b-card-body>
 
-          <b-card-footer> </b-card-footer>
+          <comment :question="row.item"></comment>
         </b-card>
       </template>
     </b-table>
@@ -97,14 +92,15 @@
       last-text="Last"
       align="center"
     ></b-pagination>
-    <div class="text-right">
-      <button class="btn btn-primary" @click="movePage">등록</button>
+    <div class="text-right" v-if="loginId !== 'admin'">
+      <button class="btn btn-outline-warning mt-2" @click="movePage">문의하기</button>
     </div>
   </b-container>
 </template>
 
 <script>
 import moment from 'moment';
+import Comment from '../components/Comment.vue';
 import { createNamespacedHelpers } from 'vuex';
 
 const userHelper = createNamespacedHelpers('userStore');
@@ -112,11 +108,14 @@ const boardHelper = createNamespacedHelpers('boardStore');
 
 export default {
   name: 'list',
+  components: {
+    Comment,
+  },
+  props: ['question'],
   data: function () {
     return {
       perPage: 5,
       currentPage: 1,
-      // items: [],
       // Note 'isActive' is left out and will not appear in the rendered table
       fields: [
         {
@@ -142,6 +141,7 @@ export default {
       ],
       filter: null,
       filterOn: [],
+      pageIndex: 0,
     };
   },
   created() {
@@ -157,7 +157,7 @@ export default {
     },
   },
   methods: {
-    ...boardHelper.mapActions(['getBoardList, deleteBoard']),
+    ...boardHelper.mapActions(['getBoardList']),
     movePage() {
       this.$router.push('/create');
     },
@@ -167,13 +167,13 @@ export default {
       this.currentPage = 1;
     },
     getDate(value) {
-      return moment(new Date(value)).format('YYYY.MM.DD HH:mm:ss');
+      return moment(new Date(value)).format('YYYY.MM.DD');
     },
   },
 };
 </script>
 
-<style>
+<style scoped>
 .board-list {
   background-color: white;
 }

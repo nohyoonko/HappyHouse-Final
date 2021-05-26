@@ -1,49 +1,58 @@
 <template>
-  <b-container>
-    <div class="form-group">
-      <label for="writer">작성자</label>
-      <input
-        type="text"
-        class="form-control"
-        id="writer"
-        ref="writer"
-        placeholder="작성자를 입력하세요"
-        v-model="writer"
-      />
-    </div>
-    <div class="form-group">
-      <label for="title">제목</label>
-      <input
-        type="text"
-        class="form-control"
-        id="title"
-        ref="title"
-        placeholder="제목을 입력하세요"
-        v-model="title"
-      />
-    </div>
-    <div class="form-group">
-      <label for="content">내용</label>
-      <textarea
-        type="text"
-        class="form-control"
-        id="contnet"
-        ref="content"
-        placeholder="내용을 입력하세요"
-        v-model="content"
-      ></textarea>
-    </div>
-    <div class="text-right">
-      <button class="btn btn-primary" v-if="type == 'create'" @click="checkHandler">등록</button>
-      <button class="btn btn-primary" v-else @click="checkHandler">수정</button>
-      <button class="btn btn-primary" @click="moveList">목록</button>
-    </div>
+  <b-container class="mt-3">
+    <b-card border-variant="warning" header-bg-variant="warning">
+      <template #header>
+        <h4 class="mb-0">문의하기</h4>
+      </template>
+      <b-card-body>
+        <b-card-sub-title align="right">작성자: {{ loginId }}</b-card-sub-title>
+        <div class="form-group">
+          <label for="title">제목</label>
+          <input
+            type="text"
+            class="form-control"
+            id="title"
+            ref="title"
+            placeholder="제목을 입력하세요"
+            v-model="title"
+          />
+        </div>
+        <div class="form-group">
+          <label for="content">내용</label>
+          <b-form-textarea
+            type="text"
+            class="form-control"
+            id="contnet"
+            ref="content"
+            rows="5"
+            placeholder="내용을 입력하세요"
+            v-model="content"
+            no-resize
+          ></b-form-textarea>
+        </div>
+        <div class="text-right">
+          <button
+            class="btn btn-outline-success mr-2"
+            v-if="type == 'create'"
+            @click="checkHandler"
+          >
+            등록
+          </button>
+          <button class="btn btn-outline-warning mr-2" v-else @click="checkHandler">수정</button>
+          <button class="btn btn-outline-secondary" @click="moveList">목록</button>
+        </div>
+      </b-card-body>
+    </b-card>
   </b-container>
 </template>
 
 <script>
 import http from '@/util/http-common';
+import { createNamespacedHelpers } from 'vuex';
+
+const userHelper = createNamespacedHelpers('userStore');
 const storage = window.sessionStorage;
+
 export default {
   name: 'board-Form',
   props: {
@@ -58,11 +67,15 @@ export default {
       content: '',
     };
   },
+  computed: {
+    ...userHelper.mapState({
+      loginId: (state) => state.loginUser.id,
+    }),
+  },
   methods: {
     checkHandler() {
       let err = true;
       let msg = '';
-      !this.writer && ((msg = '작성자를 입력해주세요'), (err = false), this.$refs.writer.focus());
       err && !this.title && ((msg = '제목 입력해주세요'), (err = false), this.$refs.title.focus());
       err &&
         !this.content &&
@@ -76,7 +89,7 @@ export default {
         .post(
           '/board',
           {
-            writer: this.writer,
+            writer: this.loginId,
             title: this.title,
             content: this.content,
           },

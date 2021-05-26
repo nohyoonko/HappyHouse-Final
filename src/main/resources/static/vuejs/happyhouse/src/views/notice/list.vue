@@ -1,81 +1,80 @@
 <template>
-  <section class="main container">
-    <div class="mt-3 mb-3">
-      <form id="searchform" class="form-inline justify-content-end" action="">
-        <input type="hidden" name="act" value="list" />
-        <select class="form-control mr-1" name="key" id="key" v-model="selField">
-          <option value="articleno">글번호</option>
-          <option value="subject">제목</option>
-        </select>
-        <input
-          class="form-control mr-sm-2"
-          type="text"
-          name="word"
-          id="word"
-          placeholder="Search"
-          v-model="word"
-        />
-        <button
-          class="btn"
-          style="background-color: #17a2b8; color: white"
-          type="button"
-          @click="searchArticle"
-        >
-          Search
-        </button>
-      </form>
-    </div>
-    <!--테이블 시작-->
-    <b-table
-      id="my-table"
-      @row-clicked="noticeDetail"
-      :fields="fields"
-      :items="notices"
-      :per-page="perPage"
-      :current-page="currentPage"
-    ></b-table>
-    <!--테이블 끝-->
-    <b-pagination
-      v-model="currentPage"
-      :total-rows="rows"
-      :per-page="perPage"
-      aria-controls="my-table"
-      first-text="First"
-      prev-text="Prev"
-      next-text="Next"
-      last-text="Last"
+  <b-container class="mt-3">
+    <b-card
+      border-variant="info"
+      header="공지사항"
+      header-tag="h2"
+      header-bg-variant="info"
+      header-text-variant="white"
       align="center"
-    ></b-pagination>
+    >
+      <div class="mt-3 mb-3">
+        <form id="searchform" class="form-inline justify-content-end" action="">
+          <input type="hidden" name="act" value="list" />
+          <select class="form-control mr-1" name="key" id="key" v-model="selField">
+            <option value="articleno">글번호</option>
+            <option value="subject">제목</option>
+          </select>
+          <input
+            class="form-control mr-sm-2"
+            type="text"
+            name="word"
+            id="word"
+            placeholder="Search"
+            v-model="word"
+          />
+          <b-button variant="warning" class="text-white" type="button" @click="searchArticle">
+            Search
+          </b-button>
+        </form>
+      </div>
+      <!--테이블 시작-->
+      <b-table
+        id="my-table"
+        @row-clicked="noticeDetail"
+        :fields="fields"
+        :items="notices"
+        :per-page="perPage"
+        :current-page="currentPage"
+      ></b-table>
+      <!--테이블 끝-->
+      <b-pagination
+        v-model="currentPage"
+        :total-rows="rows"
+        :per-page="perPage"
+        aria-controls="my-table"
+        first-text="First"
+        prev-text="Prev"
+        next-text="Next"
+        last-text="Last"
+        align="center"
+      ></b-pagination>
 
-    <div class="dropup mt-5" v-if="loginUser.id == 'admin'">
-      <div class="text-right">
-        <!-- <button type="button" class="btn" data-toggle="dropdown"><i class="fas fa-plus-circle w3-text-red"></i></button> -->
-        <button
-          type="button"
-          class="btn btn-circle btn-xl"
-          data-toggle="dropdown"
-          style="
-            border-radius: 35px;
-            width: 50px;
-            height: 50px;
-            font-size: 25px;
-            background-color: #17a2b8;
-          "
-          @click="createNotice"
-        >
-          <span style="color: white; font-size: 30px">+</span>
-        </button>
-        <div class="dropdown-menu">
-          <a class="dropdown-item" href="#" data-toggle="modal" data-target="#myModal">글쓰기</a>
+      <div class="dropup mt-5" v-if="loginUser.id == 'admin'">
+        <div class="text-right">
+          <!-- <button type="button" class="btn" data-toggle="dropdown"><i class="fas fa-plus-circle w3-text-red"></i></button> -->
+          <b-button
+            type="button"
+            fill
+            variant="warning"
+            data-toggle="dropdown"
+            style="border-radius: 35px; width: 50px; height: 50px; font-size: 25px"
+            @click="createNotice"
+          >
+            <span style="color: white; font-size: 30px">+</span>
+          </b-button>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#myModal">글쓰기</a>
+          </div>
         </div>
       </div>
-    </div>
 
-    <detail-modal v-if="flag == 1" @close="closeModal"></detail-modal>
-    <modify-modal v-if="flag == 2" @close="closeModal"></modify-modal>
-    <delete-modal v-if="flag == 3" @close="closeModal"></delete-modal>
-    <create-modal v-if="flag == 4" @close="closeModal"></create-modal>
-  </section>
+      <detail-modal v-if="flag == 1" @close="closeModal"></detail-modal>
+      <modify-modal v-if="flag == 2" @close="closeModal"></modify-modal>
+      <delete-modal v-if="flag == 3" @close="closeModal"></delete-modal>
+      <create-modal v-if="flag == 4" @close="closeModal"></create-modal>
+    </b-card>
+  </b-container>
 </template>
 
 <script>

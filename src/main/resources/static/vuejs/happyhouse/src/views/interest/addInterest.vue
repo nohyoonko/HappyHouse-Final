@@ -166,6 +166,7 @@ export default {
         " " +
         this.selected_dong.dong;
       this.addInterest(addr);
+      this.reset();
     },
   },
 };

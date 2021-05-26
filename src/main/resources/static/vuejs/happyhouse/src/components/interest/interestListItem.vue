@@ -33,6 +33,7 @@ export default {
     async delInterest() {
       await this.deleteInterest(this.interest);
       await this.getInterests();
+      this.$router.go();
     },
   },
 };

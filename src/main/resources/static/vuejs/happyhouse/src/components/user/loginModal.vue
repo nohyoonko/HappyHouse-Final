@@ -3,7 +3,6 @@
     <div class="modal-mask">
       <div class="modal-wrapper">
         <div class="modal-container">
-
           <div class="modal-header">
             <slot name="header">
               <h2 class="modal-title">로그인</h2>
@@ -12,25 +11,39 @@
 
           <div class="modal-body">
             <slot name="body">
-              	<form id="loginform" method="post">
-                  <div class="form-group">
-                    <label for="userid">ID:</label>
-                    <input type="text" v-model="userid" class="form-control" id="userid" name="userid" placeholder="Enter ID" />
-                  </div>
-                  <div class="form-group">
-                    <label for="userpwd">Password:</label>
-                    <input type="password" v-model="userpwd" class="form-control" id="userpwd" name="userpwd" placeholder="Enter Password" />
-                  </div>
-                </form>
+              <form id="loginform" method="post">
+                <div class="form-group">
+                  <label for="userid">ID:</label>
+                  <input
+                    type="text"
+                    v-model="userid"
+                    class="form-control"
+                    id="userid"
+                    name="userid"
+                    placeholder="Enter ID"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="userpwd">Password:</label>
+                  <input
+                    type="password"
+                    v-model="userpwd"
+                    class="form-control"
+                    id="userpwd"
+                    name="userpwd"
+                    placeholder="Enter Password"
+                  />
+                </div>
+              </form>
             </slot>
           </div>
 
           <div class="modal-footer">
             <slot name="footer">
-              	<b-button v-b-modal.findPwdModal variant="info">비밀번호 찾기</b-button>
-				        <find-pwd-modal></find-pwd-modal>
-                <button type="button" class="btn btn-primary" @click="callLogin">LogIn</button>
-				        <button type="button" class="btn btn-secondary" @click="$emit('close')">Close</button>
+              <b-button v-b-modal.findPwdModal variant="info">비밀번호 찾기</b-button>
+              <find-pwd-modal></find-pwd-modal>
+              <button type="button" class="btn btn-primary" @click="callLogin">LogIn</button>
+              <button type="button" class="btn btn-secondary" @click="$emit('close')">Close</button>
             </slot>
           </div>
         </div>
@@ -49,53 +62,53 @@ const storage = window.sessionStorage;
 const userStore = 'userStore';
 
 export default {
-    data() {
-        return {
-            userid: "",
-            userpwd: "",
-        }
+  data() {
+    return {
+      userid: '',
+      userpwd: '',
+    };
+  },
+  components: {
+    FindPwdModal,
+  },
+  methods: {
+    ...mapActions(userStore, ['login']),
+    // getInfo() {
+    //     http.post("/info",
+    //     {
+    //         userid: "some@email.com",
+    //         userpwd: "some password"
+    //     },
+    //     {
+    //         headers: {
+    //             "jwt-auth-token": storage.getItem("jwt-auth-token")
+    //         }
+    //     }).then(res => {
+    //         this.setInfo("정보 조회 성공", res.headers.auth_token, JSON.stringify(res.data));
+    //     }).catch(err => {
+    //         this.setInfo("정보 조회 실패", "", err.res.data.message);
+    //     })
+    // },
+    callLogin() {
+      const user = [this.userid, this.userpwd];
+      this.login(user);
+      this.$emit('close');
     },
-    components: {
-        FindPwdModal
-    },
-    methods: {
-        ...mapActions(userStore, ['login']),
-        // getInfo() {
-        //     http.post("/info",
-        //     {
-        //         userid: "some@email.com",
-        //         userpwd: "some password"
-        //     },
-        //     {
-        //         headers: {
-        //             "jwt-auth-token": storage.getItem("jwt-auth-token")
-        //         }
-        //     }).then(res => {
-        //         this.setInfo("정보 조회 성공", res.headers.auth_token, JSON.stringify(res.data));
-        //     }).catch(err => {
-        //         this.setInfo("정보 조회 실패", "", err.res.data.message);
-        //     })
-        // },
-        callLogin() {
-          const user = [this.userid, this.userpwd];
-          this.login(user);
-          this.$emit('close');
-        },
-    },
-}
+  },
+};
 </script>
 
 <style scoped>
 .modal-mask {
   position: fixed;
-  z-index: 2;
+  z-index: 10;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, .5);
+  background-color: rgba(0, 0, 0, 0.5);
   display: table;
-  transition: opacity .3s ease;
+  transition: opacity 0.3s ease;
 }
 
 .modal-wrapper {
@@ -110,8 +123,8 @@ export default {
   padding: 20px 30px;
   background-color: #fff;
   border-radius: 2px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
-  transition: all .3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
+  transition: all 0.3s ease;
   font-family: Helvetica, Arial, sans-serif;
 }
 

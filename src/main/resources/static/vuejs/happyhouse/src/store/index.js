@@ -8,6 +8,7 @@ import boardStore from '@/store/boardstore.js';
 import commentStore from '@/store/commentstore.js';
 import noticeStore from '@/store/noticestore.js';
 import interestStore from '@/store/intereststore.js';
+import newsStore from '@/store/newsstore.js';
 
 Vue.use(Vuex);
 
@@ -19,6 +20,7 @@ const store = new Vuex.Store({
     commentStore: commentStore,
     noticeStore: noticeStore,
     interestStore: interestStore,
+    newsStore: newsStore,
   },
 
   plugins: [

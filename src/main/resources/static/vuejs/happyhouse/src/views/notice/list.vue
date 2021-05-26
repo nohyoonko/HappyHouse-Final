@@ -17,7 +17,7 @@
         />
         <button
           class="btn"
-          style="background-color: #ac58dd; color: white"
+          style="background-color: #17a2b8; color: white"
           type="button"
           @click="searchArticle"
         >
@@ -59,7 +59,7 @@
             width: 50px;
             height: 50px;
             font-size: 25px;
-            background-color: #ac58dd;
+            background-color: #17a2b8;
           "
           @click="createNotice"
         >
@@ -96,7 +96,7 @@ export default {
   },
   data: function () {
     return {
-      perPage: 5,
+      perPage: 10,
       currentPage: 1,
       items: [],
       fields: [
@@ -111,6 +111,7 @@ export default {
 			selField:'articleno',
 			word:'',
       pageIndex: 0,
+      noticeItems:[],
     };
   },
   computed: {
@@ -118,7 +119,6 @@ export default {
 		...mapState(userStore, ['loginUser',]),
 		notices: {
       get () {
-        //return this.$store.getters.get_selected_gugun('aptStore/')
         return this.$store.getters["noticeStore/get_notices"];
       },
       set (value) {
@@ -132,7 +132,8 @@ export default {
   watch: {
     flag: function () {
       this.getList();
-       this.$router.push('/notice?' + this.pageIndex++)
+      if(this.flag == 0)
+        this.$router.go();
     },
   },
   created: function () {

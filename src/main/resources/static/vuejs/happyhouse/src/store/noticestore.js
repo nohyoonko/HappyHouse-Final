@@ -4,7 +4,8 @@ const storage = window.sessionStorage;
 const noticeStore = {
   namespaced: true,
   state: {
-    notices: [],
+    notices: [
+    ],
     notice: Object,
     flag : 0,
   },
@@ -18,6 +19,9 @@ const noticeStore = {
   },
   mutations: {
     SET_NOTICES(state, notices) {
+      for (let i = 0; i < notices.length; i++){
+        notices[i].kind = '공지';
+      }
       state.notices = notices;
     },
     SET_NOTICE(state, notice) {

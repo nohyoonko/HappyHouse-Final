@@ -5,7 +5,7 @@
     <td>{{notice.wuserid}}</td>
     <td>{{ notice.count }}</td>
     <td>{{ getFormatDate(notice.regtime) }}</td>
-    <td></td>
+    <td><span class="badge badge-info">공지</span></td>
   </tr>
   
 </template>
@@ -32,7 +32,6 @@ export default {
       this.openModal();
     },
     openModal() {
-      console.log("opening")
       this.setFlag(1);
     }
 

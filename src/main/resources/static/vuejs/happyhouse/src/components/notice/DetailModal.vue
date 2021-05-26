@@ -8,11 +8,11 @@
 					<h4 class="modal-title" id="articleSubject">{{notice.subject}}</h4>
 					<div class="text-right">
 						<!-- 글 작성자와 로그인한 유저가 같으면, 수정/삭제가 보임 -->
-						<button id="modifybt" class="btn btn-info" @click="modNotice"  v-if="loginUser.id == 'admin'">수정
+						<button id="modifybt" class="btn btn-outline-info btn-sm" @click="modNotice"  v-if="loginUser.id == 'admin'">수정
 						</button>
-						<button id="delbt"  class="btn btn-danger ml-2" @click="delNotice"  v-if="loginUser.id == 'admin'">삭제
+						<button id="delbt" class="btn btn-sm btn-outline-danger ml-2" @click="delNotice"  v-if="loginUser.id == 'admin'">삭제
 						</button>
-						<button type="button" class="close" @click="closeModal" data-dismiss="modal">&times;</button>
+						<button type="button" class="close" @mouseover="cursor=pointer" @click="closeModal" data-dismiss="modal">&times;</button>
 					</div>
 				</div>
 
@@ -38,7 +38,7 @@
 							</tr>
 							<tr>
 								<th>분류</th>
-								<td><span class="badge badge-primary">공지</span></td>
+								<td><span class="badge badge-info">공지</span></td>
 							</tr>
 						</table>
 					</div>

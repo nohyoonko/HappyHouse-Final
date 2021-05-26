@@ -19,10 +19,10 @@
 				</div>
 
         <div class="modal-footer">
-					<button type="button" class="btn btn-primary mr-2" data-dismiss="modal"
-						@click="delNotice">Yes</button>
-					<button type="button" class="btn btn-secondary"
-						data-dismiss="modal" @click="closeModal">No</button>
+					<button type="button" class="btn btn-outline-info mr-2" data-dismiss="modal"
+						@click="delNotice">네</button>
+					<button type="button" class="btn  btn-outline-secondary"
+						data-dismiss="modal" @click="아니요">No</button>
 				</div>
 
         </div>

@@ -1,82 +1,95 @@
 <template>
   <b-row class="map_wrap">
-    <b-col id="map" style="width: 100vw; height: 60vh; position: relative; overflow: hidden"></b-col>
+    <b-col
+      id="map"
+      class="m-2"
+      style="width: 100vw; height: 60vh; position: relative; overflow: hidden"
+    ></b-col>
     <div>
       <ul id="category" v-if="!menuon">
         <li id="close" data-order="6" @click="changeMenuOn">
-      <span ><b-icon font-scale="1" variant="danger" stacked icon="shop" scale="1"></b-icon></span>
-        상권정보
-      </li>
+          <span
+            ><b-icon font-scale="1" variant="danger" stacked icon="shop" scale="1"></b-icon
+          ></span>
+          상권정보
+        </li>
       </ul>
-    <ul id="category" v-else>
-      <li id="BK9" data-order="0" @click="onClickCategory($event)">
-        <span class="category_bg bank"></span>
-        은행
-      </li>
-      <li id="MT1" data-order="1" @click="onClickCategory($event)">
-        <span class="category_bg mart"></span>
-        마트
-      </li>
-      <li id="PM9" data-order="2" @click="onClickCategory($event)">
-        <span class="category_bg pharmacy"></span>
-        약국
-      </li>
-      <li id="OL7" data-order="3" @click="onClickCategory($event)">
-        <span class="category_bg oil"></span>
-        주유소
-      </li>
-      <li id="CE7" data-order="4" @click="onClickCategory($event)">
-        <span class="category_bg cafe"></span>
-        카페
-      </li>
-      <li id="CS2" data-order="5" @click="onClickCategory($event)">
-        <span class="category_bg store"></span>
-        편의점
-      </li>
-      <li id="close" data-order="6" @click="changeMenuOn">
-      <span ><b-icon font-scale="1" variant="danger" stacked icon="chevron-double-left" scale="1"></b-icon></span>
-        접기
-      </li>
-    </ul>
+      <ul id="category" v-else>
+        <li id="BK9" data-order="0" @click="onClickCategory($event)">
+          <span class="category_bg bank"></span>
+          은행
+        </li>
+        <li id="MT1" data-order="1" @click="onClickCategory($event)">
+          <span class="category_bg mart"></span>
+          마트
+        </li>
+        <li id="PM9" data-order="2" @click="onClickCategory($event)">
+          <span class="category_bg pharmacy"></span>
+          약국
+        </li>
+        <li id="OL7" data-order="3" @click="onClickCategory($event)">
+          <span class="category_bg oil"></span>
+          주유소
+        </li>
+        <li id="CE7" data-order="4" @click="onClickCategory($event)">
+          <span class="category_bg cafe"></span>
+          카페
+        </li>
+        <li id="CS2" data-order="5" @click="onClickCategory($event)">
+          <span class="category_bg store"></span>
+          편의점
+        </li>
+        <li id="close" data-order="6" @click="changeMenuOn">
+          <span
+            ><b-icon
+              font-scale="1"
+              variant="danger"
+              stacked
+              icon="chevron-double-left"
+              scale="1"
+            ></b-icon
+          ></span>
+          접기
+        </li>
+      </ul>
     </div>
   </b-row>
 </template>
 
 <script>
-import { mapState } from 'vuex';
-const interestStore = 'interestStore';
+import { mapState } from "vuex";
+const interestStore = "interestStore";
 
 export default {
-  name: 'InterestMap',
+  name: "InterestMap",
   props: {},
   computed: {
-    ...mapState(interestStore, ['interest']),
+    ...mapState(interestStore, ["interest"]),
   },
   data() {
     return {
-      placeOverlay : '',
-        contentNode :'', // 커스텀 오버레이의 컨텐츠 엘리먼트 입니다
-        markers : [], // 마커를 담을 배열입니다
-        currCategory : '', // 현재 선택된 카테고리를 가지고 있을 변수입니다
+      placeOverlay: "",
+      contentNode: "", // 커스텀 오버레이의 컨텐츠 엘리먼트 입니다
+      markers: [], // 마커를 담을 배열입니다
+      currCategory: "", // 현재 선택된 카테고리를 가지고 있을 변수입니다
 
-      mapContainer : '', // 지도를 표시할 div
-      mapOption : {
-        },
+      mapContainer: "", // 지도를 표시할 div
+      mapOption: {},
       // 지도를 생성합니다
-      map : '',
+      map: "",
       // 장소 검색 객체를 생성합니다
-      ps : '',
-      menuon : false,
-    }
+      ps: "",
+      menuon: false,
+    };
   },
   mounted() {
     if (window.kakao && window.kakao.maps) {
       this.initMap();
     } else {
-      const script = document.createElement('script');
+      const script = document.createElement("script");
       script.onload = () => kakao.maps.load(this.initMap);
       script.src =
-        'http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=b80b9f0e805429d445e5a1dd888a722f&libraries=services';
+        "http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=b80b9f0e805429d445e5a1dd888a722f&libraries=services";
       document.head.appendChild(script);
     }
   },
@@ -86,21 +99,21 @@ export default {
     },
   },
   methods: {
-    changeMenuOn(){
-      this.menuon = this.menuon? false : true;
+    changeMenuOn() {
+      this.menuon = this.menuon ? false : true;
     },
     initMap() {
       // 마커를 클릭했을 때 해당 장소의 상세정보를 보여줄 커스텀오버레이입니다
-      this.placeOverlay = new kakao.maps.CustomOverlay({ zIndex: 1 }),
-        this.contentNode = document.createElement('div'), // 커스텀 오버레이의 컨텐츠 엘리먼트 입니다
-        this.markers = [], // 마커를 담을 배열입니다
-        this.currCategory = ''; // 현재 선택된 카테고리를 가지고 있을 변수입니다
+      (this.placeOverlay = new kakao.maps.CustomOverlay({ zIndex: 1 })),
+        (this.contentNode = document.createElement("div")), // 커스텀 오버레이의 컨텐츠 엘리먼트 입니다
+        (this.markers = []), // 마커를 담을 배열입니다
+        (this.currCategory = ""); // 현재 선택된 카테고리를 가지고 있을 변수입니다
 
-      this.mapContainer = document.getElementById('map'), // 지도를 표시할 div
-        this.mapOption = {
+      (this.mapContainer = document.getElementById("map")), // 지도를 표시할 div
+        (this.mapOption = {
           center: new kakao.maps.LatLng(37.5642135, 127.0016985), // 지도의 중심좌표
           level: 8, // 지도의 확대 레벨
-        };
+        });
 
       // 지도를 생성합니다
       this.map = new kakao.maps.Map(this.mapContainer, this.mapOption);
@@ -108,17 +121,17 @@ export default {
       // 장소 검색 객체를 생성합니다
       this.ps = new kakao.maps.services.Places(this.map);
 
-      	var imageSrc = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbG5zOnN2Z2pzPSJodHRwOi8vc3ZnanMuY29tL3N2Z2pzIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgeD0iMCIgeT0iMCIgdmlld0JveD0iMCAwIDUxMiA1MTIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMiA1MTIiIHhtbDpzcGFjZT0icHJlc2VydmUiIGNsYXNzPSIiPjxnPgo8cG9seWdvbiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHN0eWxlPSIiIHBvaW50cz0iNDMyLjEwNiwyNTAuNTM0IDQzMi4xMDYsNDcwLjAyMSAyOTYuNTc4LDQ3MC4wMjEgMjk2LjU3OCwzMzYuOTc1IDIyMS4zOTksMzM2Ljk3NSAgIDIyMS4zOTksNDcwLjAyMSA3OS44OTQsNDcwLjAyMSA3OS44OTQsMjUwLjUzNCAyNTYsMTE1LjA3NSAiIGZpbGw9IiM1ZWUxZjUiIGRhdGEtb3JpZ2luYWw9IiNmZmI3NGYiIGNsYXNzPSIiPjwvcG9seWdvbj4KPHBhdGggeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiBzdHlsZT0iIiBkPSJNNDM5LjQ4NSwxODMuMTM1VjkwLjMwNmgtNzQuMTY3djM1Ljc3MkwyNTYsNDEuOTc5TDAsMjM4LjkybDUzLjYzMyw2OS43MTJMMjU2LDE1Mi45NTkgIGwyMDIuMzY3LDE1NS42NzJMNTEyLDIzOC45Mkw0MzkuNDg1LDE4My4xMzV6IiBmaWxsPSIjMDBiNGNmIiBkYXRhLW9yaWdpbmFsPSIjZmY3ZDNjIiBjbGFzcz0iIj48L3BhdGg+Cjxwb2x5Z29uIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3R5bGU9IiIgcG9pbnRzPSI0MzIuMTA2LDI1MC41MzQgNDMyLjEwNiw0NzAuMDIxIDI5Ni41NzgsNDcwLjAyMSAyOTYuNTc4LDMzNi45NzUgMjU2LDMzNi45NzUgMjU2LDExNS4wNzUgICAiIGZpbGw9IiMyN2NhZTMiIGRhdGEtb3JpZ2luYWw9IiNmZjlhMDAiIGNsYXNzPSIiPjwvcG9seWdvbj4KPHBvbHlnb24geG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiBzdHlsZT0iIiBwb2ludHM9IjUxMiwyMzguOTIgNDU4LjM2NywzMDguNjMyIDI1NiwxNTIuOTU5IDI1Niw0MS45NzkgMzY1LjMxOCwxMjYuMDc4IDM2NS4zMTgsOTAuMzA2ICAgNDM5LjQ4NSw5MC4zMDYgNDM5LjQ4NSwxODMuMTM1ICIgZmlsbD0iIzAwOTdhZSIgZGF0YS1vcmlnaW5hbD0iI2ZmNGUxOSIgY2xhc3M9IiI+PC9wb2x5Z29uPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8L2c+PC9zdmc+",  
-						imageSize = new kakao.maps.Size(32, 33), // 마커이미지의 크기입니다
-						imageOption = {offset: new kakao.maps.Point(16, 16)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
-							
-				// 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
-					var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
+      var imageSrc =
+          "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbG5zOnN2Z2pzPSJodHRwOi8vc3ZnanMuY29tL3N2Z2pzIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgeD0iMCIgeT0iMCIgdmlld0JveD0iMCAwIDUxMiA1MTIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMiA1MTIiIHhtbDpzcGFjZT0icHJlc2VydmUiIGNsYXNzPSIiPjxnPgo8cG9seWdvbiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHN0eWxlPSIiIHBvaW50cz0iNDMyLjEwNiwyNTAuNTM0IDQzMi4xMDYsNDcwLjAyMSAyOTYuNTc4LDQ3MC4wMjEgMjk2LjU3OCwzMzYuOTc1IDIyMS4zOTksMzM2Ljk3NSAgIDIyMS4zOTksNDcwLjAyMSA3OS44OTQsNDcwLjAyMSA3OS44OTQsMjUwLjUzNCAyNTYsMTE1LjA3NSAiIGZpbGw9IiM1ZWUxZjUiIGRhdGEtb3JpZ2luYWw9IiNmZmI3NGYiIGNsYXNzPSIiPjwvcG9seWdvbj4KPHBhdGggeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiBzdHlsZT0iIiBkPSJNNDM5LjQ4NSwxODMuMTM1VjkwLjMwNmgtNzQuMTY3djM1Ljc3MkwyNTYsNDEuOTc5TDAsMjM4LjkybDUzLjYzMyw2OS43MTJMMjU2LDE1Mi45NTkgIGwyMDIuMzY3LDE1NS42NzJMNTEyLDIzOC45Mkw0MzkuNDg1LDE4My4xMzV6IiBmaWxsPSIjMDBiNGNmIiBkYXRhLW9yaWdpbmFsPSIjZmY3ZDNjIiBjbGFzcz0iIj48L3BhdGg+Cjxwb2x5Z29uIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3R5bGU9IiIgcG9pbnRzPSI0MzIuMTA2LDI1MC41MzQgNDMyLjEwNiw0NzAuMDIxIDI5Ni41NzgsNDcwLjAyMSAyOTYuNTc4LDMzNi45NzUgMjU2LDMzNi45NzUgMjU2LDExNS4wNzUgICAiIGZpbGw9IiMyN2NhZTMiIGRhdGEtb3JpZ2luYWw9IiNmZjlhMDAiIGNsYXNzPSIiPjwvcG9seWdvbj4KPHBvbHlnb24geG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiBzdHlsZT0iIiBwb2ludHM9IjUxMiwyMzguOTIgNDU4LjM2NywzMDguNjMyIDI1NiwxNTIuOTU5IDI1Niw0MS45NzkgMzY1LjMxOCwxMjYuMDc4IDM2NS4zMTgsOTAuMzA2ICAgNDM5LjQ4NSw5MC4zMDYgNDM5LjQ4NSwxODMuMTM1ICIgZmlsbD0iIzAwOTdhZSIgZGF0YS1vcmlnaW5hbD0iI2ZmNGUxOSIgY2xhc3M9IiI+PC9wb2x5Z29uPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8L2c+PC9zdmc+",
+        imageSize = new kakao.maps.Size(32, 33), // 마커이미지의 크기입니다
+        imageOption = { offset: new kakao.maps.Point(16, 16) }; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
 
+      // 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
+      var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
 
-       var points = [];
-       var cnt = 0;
-       if (this.interest != null && this.interest.address != '' && this.interest.address != null) {
+      var points = [];
+      var cnt = 0;
+      if (this.interest != null && this.interest.address != "" && this.interest.address != null) {
         var geocoder = new window.kakao.maps.services.Geocoder();
         const text = this.interest.address;
 
@@ -136,7 +149,7 @@ export default {
             // 커스텀 오버레이는 아래와 같이 사용자가 자유롭게 컨텐츠를 구성하고 이벤트를 제어할 수 있기 때문에
             // 별도의 이벤트 메소드를 제공하지 않습니다
             var content =
-              '<div class ="label"><span class="left"></span><span class="center">' +
+              '<div class="label"><span class="left"></span><span class="center">' +
               text +
               '</span><span class="right"></span></div>';
             // 마커 위에 커스텀오버레이를 표시합니다
@@ -146,12 +159,12 @@ export default {
               map: this.map,
               position: marker.getPosition(),
               xAnchor: 0.5,
-							yAnchor: 0.3,
+              yAnchor: 1.5,
             });
             overlay.setVisible(false);
 
             // 마커를 클릭했을 때 커스텀 오버레이를 표시합니다
-            kakao.maps.event.addListener(marker, 'click', function () {
+            kakao.maps.event.addListener(marker, "click", function () {
               if (overlay.getVisible() == true) {
                 overlay.setVisible(false);
               } else {
@@ -178,15 +191,15 @@ export default {
       }
 
       // 지도에 idle 이벤트를 등록합니다
-      kakao.maps.event.addListener(this.map, 'idle', this.searchPlaces);
+      kakao.maps.event.addListener(this.map, "idle", this.searchPlaces);
 
       // 커스텀 오버레이의 컨텐츠 노드에 css class를 추가합니다
-      this.contentNode.className = 'placeinfo_wrap';
+      this.contentNode.className = "placeinfo_wrap";
 
       // 커스텀 오버레이의 컨텐츠 노드에 mousedown, touchstart 이벤트가 발생했을때
       // 지도 객체에 이벤트가 전달되지 않도록 이벤트 핸들러로 kakao.maps.event.preventMap 메소드를 등록합니다
-      this.addEventHandle(this.contentNode, 'mousedown', kakao.maps.event.preventMap);
-      this.addEventHandle(this.contentNode, 'touchstart', kakao.maps.event.preventMap);
+      this.addEventHandle(this.contentNode, "mousedown", kakao.maps.event.preventMap);
+      this.addEventHandle(this.contentNode, "touchstart", kakao.maps.event.preventMap);
 
       // 커스텀 오버레이 컨텐츠를 설정합니다
       this.placeOverlay.setContent(this.contentNode);
@@ -199,7 +212,7 @@ export default {
       if (target.addEventListener) {
         target.addEventListener(type, callback);
       } else {
-        target.attachEvent('on' + type, callback);
+        target.attachEvent("on" + type, callback);
       }
     },
 
@@ -234,7 +247,7 @@ export default {
     displayPlaces(places) {
       // 몇번째 카테고리가 선택되어 있는지 얻어옵니다
       // 이 순서는 스프라이트 이미지에서의 위치를 계산하는데 사용됩니다
-      var order = document.getElementById(this.currCategory).getAttribute('data-order');
+      var order = document.getElementById(this.currCategory).getAttribute("data-order");
 
       for (var i = 0; i < places.length; i++) {
         // 마커를 생성하고 지도에 표시합니다
@@ -243,7 +256,7 @@ export default {
         // 마커와 검색결과 항목을 클릭 했을 때
         // 장소정보를 표출하도록 클릭 이벤트를 등록합니다
         (function (marker, place) {
-          kakao.maps.event.addListener(marker, 'click', function () {
+          kakao.maps.event.addListener(marker, "click", function () {
             this.displayPlaceInfo(place);
           });
         })(marker, places[i]);
@@ -252,7 +265,7 @@ export default {
 
     // 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
     addMarker(position, order) {
-      var imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_category.png', // 마커 이미지 url, 스프라이트 이미지를 씁니다
+      var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_category.png", // 마커 이미지 url, 스프라이트 이미지를 씁니다
         imageSize = new kakao.maps.Size(27, 28), // 마커 이미지의 크기
         imgOptions = {
           spriteSize: new kakao.maps.Size(72, 208), // 스프라이트 이미지의 크기
@@ -289,7 +302,7 @@ export default {
         place.place_name +
         '">' +
         place.place_name +
-        '</a>';
+        "</a>";
 
       if (place.road_address_name) {
         content +=
@@ -297,18 +310,18 @@ export default {
           place.road_address_name +
           '">' +
           place.road_address_name +
-          '</span>' +
+          "</span>" +
           '  <span class="jibun" title="' +
           place.address_name +
           '">(지번 : ' +
           place.address_name +
-          ')</span>';
+          ")</span>";
       } else {
-        content += '    <span title="' + place.address_name + '">' + place.address_name + '</span>';
+        content += '    <span title="' + place.address_name + '">' + place.address_name + "</span>";
       }
 
       content +=
-        '    <span class="tel">' + place.phone + '</span>' + '</div>' + '<div class="after"></div>';
+        '    <span class="tel">' + place.phone + "</span>" + "</div>" + '<div class="after"></div>';
 
       this.contentNode.innerHTML = content;
       this.placeOverlay.setPosition(new kakao.maps.LatLng(place.y, place.x));
@@ -322,8 +335,8 @@ export default {
 
       this.placeOverlay.setMap(null);
 
-      if (className === 'on') {
-        this.currCategory = '';
+      if (className === "on") {
+        this.currCategory = "";
         this.changeCategoryClass();
         this.removeMarker();
       } else {
@@ -335,16 +348,16 @@ export default {
 
     // 클릭된 카테고리에만 클릭된 스타일을 적용하는 함수입니다
     changeCategoryClass(el) {
-      var category = document.getElementById('category'),
+      var category = document.getElementById("category"),
         children = category.children,
         i;
 
       for (i = 0; i < children.length; i++) {
-        children[i].className = '';
+        children[i].className = "";
       }
 
       if (el) {
-        el.className = 'on';
+        el.className = "on";
       }
     },
   },
@@ -360,7 +373,7 @@ export default {
   vertical-align: top;
 }
 .label .left {
-  background: url('https://t1.daumcdn.net/localimg/localimages/07/2011/map/storeview/tip_l.png')
+  background: url("https://t1.daumcdn.net/localimg/localimages/07/2011/map/storeview/tip_l.png")
     no-repeat;
   display: inline-block;
   height: 24px;
@@ -377,7 +390,7 @@ export default {
   line-height: 24px;
 }
 .label .right {
-  background: url('https://t1.daumcdn.net/localimg/localimages/07/2011/map/storeview/tip_r.png') -1px
+  background: url("https://t1.daumcdn.net/localimg/localimages/07/2011/map/storeview/tip_r.png") -1px
     0 no-repeat;
   display: inline-block;
   height: 24px;
@@ -389,7 +402,7 @@ export default {
 .map_wrap * {
   margin: 0;
   padding: 0;
-  font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;
+  font-family: "Malgun Gothic", dotum, "돋움", sans-serif;
   font-size: 12px;
 }
 .map_wrap {
@@ -491,13 +504,13 @@ export default {
   box-shadow: 0px 1px 2px #888;
 }
 .placeinfo_wrap .after {
-  content: '';
+  content: "";
   position: relative;
   margin-left: -12px;
   left: 50%;
   width: 22px;
   height: 12px;
-  background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png');
+  background: url("https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png");
 }
 .placeinfo a,
 .placeinfo a:hover,

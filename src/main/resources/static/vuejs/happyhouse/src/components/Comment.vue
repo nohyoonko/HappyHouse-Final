@@ -5,7 +5,7 @@
         관리자 : {{ this.comment.userid }} | 답변일 : {{ getDate(this.comment.time) }}
       </p>
       <h5><b-icon-reply-fill></b-icon-reply-fill> {{ this.comment.answer }}</h5>
-      <p class="mb-0 text-right">
+      <p v-if="loginId === 'admin'" class="mb-0 text-right">
         <b-button variant="outline-danger" size="sm" @click="callDelete">삭제</b-button>
       </p>
     </div>
@@ -31,11 +31,11 @@
 </template>
 
 <script>
-import moment from 'moment';
-import { createNamespacedHelpers } from 'vuex';
+import moment from "moment";
+import { createNamespacedHelpers } from "vuex";
 
-const userHelper = createNamespacedHelpers('userStore');
-const commentHelper = createNamespacedHelpers('commentStore');
+const userHelper = createNamespacedHelpers("userStore");
+const commentHelper = createNamespacedHelpers("commentStore");
 
 export default {
   data() {
@@ -52,10 +52,10 @@ export default {
     ...userHelper.mapState({
       loginId: (state) => state.loginUser.id,
     }),
-    ...commentHelper.mapState(['comment']),
+    ...commentHelper.mapState(["comment"]),
   },
   methods: {
-    ...commentHelper.mapActions(['getComment', 'insertComment', 'deleteComment']),
+    ...commentHelper.mapActions(["getComment", "insertComment", "deleteComment"]),
     setComment(no) {
       this.getComment(no);
     },
@@ -66,12 +66,14 @@ export default {
         answer: this.commentInput,
       };
       this.insertComment(param);
+      this.$router.go();
     },
     callDelete() {
       this.deleteComment(this.comment.commentno);
+      this.$router.go();
     },
     getDate(value) {
-      return moment(new Date(value)).format('YYYY.MM.DD');
+      return moment(new Date(value)).format("YYYY.MM.DD");
     },
   },
 };

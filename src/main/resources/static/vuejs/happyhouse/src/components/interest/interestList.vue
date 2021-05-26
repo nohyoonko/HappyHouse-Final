@@ -10,17 +10,17 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
-import InterestListItem from '@/components/interest/interestListItem.vue';
-const interestStore = 'interestStore';
+import { mapState, mapActions } from "vuex";
+import InterestListItem from "@/components/interest/interestListItem.vue";
+const interestStore = "interestStore";
 
 export default {
-  name: 'interestList',
+  name: "interestList",
   components: {
     InterestListItem,
   },
   computed: {
-    ...mapState(interestStore, ['interests']),
+    ...mapState(interestStore, ["interests"]),
     // interests: {
     //   get () {
     //     //return this.$store.getters.get_selected_gugun('aptStore/')
@@ -29,21 +29,21 @@ export default {
     //   set (value) {
     //     this.$store.commit('interestStore/SET_INTERESTS', value)
     //   }
-  //},
+    //},
   },
-  watch:{
-    interests: function() {
+  watch: {
+    interests: function () {
       console.log("changed!");
-    }
+    },
   },
   created() {
     this.getInterestareas();
   },
   methods: {
-     ...mapActions(interestStore,['getInterests']),
-     getInterestareas(){
-       this.getInterests();
-     }
+    ...mapActions(interestStore, ["getInterests"]),
+    getInterestareas() {
+      this.getInterests();
+    },
   },
 };
 </script>

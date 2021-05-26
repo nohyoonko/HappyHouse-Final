@@ -5,33 +5,6 @@
       class="mb-5"
       style="width: 80vw; height: 50vh"
     ></b-col>
-
-    <!-- <ul id="category">
-        <li id="BK9" data-order="0">
-          <span class="category_bg bank"></span>
-          은행
-        </li>
-        <li id="MT1" data-order="1">
-          <span class="category_bg mart"></span>
-          마트
-        </li>
-        <li id="PM9" data-order="2">
-          <span class="category_bg pharmacy"></span>
-          약국
-        </li>
-        <li id="OL7" data-order="3">
-          <span class="category_bg oil"></span>
-          주유소
-        </li>
-        <li id="CE7" data-order="4">
-          <span class="category_bg cafe"></span>
-          카페
-        </li>
-        <li id="CS2" data-order="5">
-          <span class="category_bg store"></span>
-          편의점
-        </li>
-      </ul> -->
   </b-row>
 </template>
 
@@ -77,6 +50,14 @@ export default {
       var cnt = 0;
       var map = new kakao.maps.Map(mapContainer, options);
       var geocoder = new window.kakao.maps.services.Geocoder();
+
+      	var imageSrc = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbG5zOnN2Z2pzPSJodHRwOi8vc3ZnanMuY29tL3N2Z2pzIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgeD0iMCIgeT0iMCIgdmlld0JveD0iMCAwIDUxMiA1MTIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMiA1MTIiIHhtbDpzcGFjZT0icHJlc2VydmUiIGNsYXNzPSIiPjxnPgo8cG9seWdvbiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHN0eWxlPSIiIHBvaW50cz0iNDMyLjEwNiwyNTAuNTM0IDQzMi4xMDYsNDcwLjAyMSAyOTYuNTc4LDQ3MC4wMjEgMjk2LjU3OCwzMzYuOTc1IDIyMS4zOTksMzM2Ljk3NSAgIDIyMS4zOTksNDcwLjAyMSA3OS44OTQsNDcwLjAyMSA3OS44OTQsMjUwLjUzNCAyNTYsMTE1LjA3NSAiIGZpbGw9IiM1ZWUxZjUiIGRhdGEtb3JpZ2luYWw9IiNmZmI3NGYiIGNsYXNzPSIiPjwvcG9seWdvbj4KPHBhdGggeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiBzdHlsZT0iIiBkPSJNNDM5LjQ4NSwxODMuMTM1VjkwLjMwNmgtNzQuMTY3djM1Ljc3MkwyNTYsNDEuOTc5TDAsMjM4LjkybDUzLjYzMyw2OS43MTJMMjU2LDE1Mi45NTkgIGwyMDIuMzY3LDE1NS42NzJMNTEyLDIzOC45Mkw0MzkuNDg1LDE4My4xMzV6IiBmaWxsPSIjMDBiNGNmIiBkYXRhLW9yaWdpbmFsPSIjZmY3ZDNjIiBjbGFzcz0iIj48L3BhdGg+Cjxwb2x5Z29uIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3R5bGU9IiIgcG9pbnRzPSI0MzIuMTA2LDI1MC41MzQgNDMyLjEwNiw0NzAuMDIxIDI5Ni41NzgsNDcwLjAyMSAyOTYuNTc4LDMzNi45NzUgMjU2LDMzNi45NzUgMjU2LDExNS4wNzUgICAiIGZpbGw9IiMyN2NhZTMiIGRhdGEtb3JpZ2luYWw9IiNmZjlhMDAiIGNsYXNzPSIiPjwvcG9seWdvbj4KPHBvbHlnb24geG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiBzdHlsZT0iIiBwb2ludHM9IjUxMiwyMzguOTIgNDU4LjM2NywzMDguNjMyIDI1NiwxNTIuOTU5IDI1Niw0MS45NzkgMzY1LjMxOCwxMjYuMDc4IDM2NS4zMTgsOTAuMzA2ICAgNDM5LjQ4NSw5MC4zMDYgNDM5LjQ4NSwxODMuMTM1ICIgZmlsbD0iIzAwOTdhZSIgZGF0YS1vcmlnaW5hbD0iI2ZmNGUxOSIgY2xhc3M9IiI+PC9wb2x5Z29uPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8L2c+PC9zdmc+",  
+						imageSize = new kakao.maps.Size(32, 33), // 마커이미지의 크기입니다
+						imageOption = {offset: new kakao.maps.Point(16, 16)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+							
+				// 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
+					var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
+
       for (var i = 0; i < this.markerlocs.length; i++) {
         const text = this.markerlocs[i].addrtext;
         geocoder.addressSearch(this.markerlocs[i].addr, (result, status) => {
@@ -88,6 +69,7 @@ export default {
             var marker = new kakao.maps.Marker({
               map: map,
               position: coords,
+              image: markerImage,
             });
 
             // 커스텀 오버레이에 표시할 컨텐츠 입니다
@@ -103,6 +85,8 @@ export default {
               content: content,
               map: map,
               position: marker.getPosition(),
+              xAnchor: 0.5,
+							yAnchor: 0.3,
             });
             overlay.setVisible(false);
 

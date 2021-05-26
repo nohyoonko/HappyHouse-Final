@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.happyhouse.model.dao.CommentDao">
+
+	<!-- 답글 조회 -->
+	<select id="getComment" resultType="CommentDto">
+		select *
+		  from comment 
+		 where articleno = #{articleno}
+	</select>
+
+	<!-- 답글 등록 -->
+	<insert id="insertComment" parameterType="CommentDto">
+		insert into comment(
+			answer, userid, articleno
+		) values (
+			#{answer}, #{userid}, #{articleno}
+		)
+	</insert>
+	
+	<!-- 답글 수정 -->
+	<update id="updateComment" parameterType="CommentDto">
+		update comment 
+		   set answer = #{answer}, 
+		   	   userid = #{userid}
+		 where articleno = #{articleno}
+	</update>
+
+	<!-- 답글 삭제 -->
+	<delete id="deleteComment" parameterType="int">
+		delete 
+		  from comment 
+		 where commentno = #{commentno}
+	</delete>
+
+</mapper>

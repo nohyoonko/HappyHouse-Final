@@ -56,7 +56,7 @@ public class CommentController {
 		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 	}
 
-	@DeleteMapping("{no}")
+	@DeleteMapping("{commentno}")
 	public ResponseEntity<String> deleteComment(@PathVariable int commentno) {
 		logger.debug("deleteComment - 호출");
 		if (commentService.deleteComment(commentno)) {

@@ -10,6 +10,7 @@ import NoticeList from '@/views/notice/list.vue';
 import Apt from '@/views/Apt.vue';
 import AddInterest from '@/views/interest/addInterest.vue';
 import ShowInterest from '@/views/interest/showInterest.vue';
+import Profile from '@/views/profile.vue';
 
 Vue.use(VueRouter);
 
@@ -64,6 +65,12 @@ const routes = [
     name: 'notice',
     component: NoticeList,
   },
+  {
+    path: '/profile',
+    name: 'profile',
+    component: Profile,
+  },
+
 ];
 
 const router = new VueRouter({

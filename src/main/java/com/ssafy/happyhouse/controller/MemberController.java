@@ -10,7 +10,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -56,7 +59,7 @@ public class MemberController {
 //	}
 //	
 	@PostMapping("/findpwd")
-	private ResponseEntity<String> findPwd(@RequestBody Map<String, String> map) {
+	private ResponseEntity<String> findPwd(Map<String, String> map) {
 		String result = null;
 		HttpStatus status = null;
 		
@@ -75,29 +78,26 @@ public class MemberController {
 		}
 		return new ResponseEntity<String>(result, status);
 	}
-//
-//	@PostMapping("/delete/{userid}")
-//	private String delete(@PathVariable("userid") String userid) {
-//		memberService.deleteMember(userid);
-//		return "redirect:/member/logout";
-//	}
-//
-//	@PostMapping("/modify")
-//	private String modify(MemberDto memberDto, Model model, HttpSession session) {
-//		try {
-//			memberService.modifyMember(memberDto);
-//			MemberDto updateMem = memberService.getMember(memberDto.getUserid());
-//			if(updateMem != null) {
-////				session 설정
-//				session.setAttribute("userinfo", updateMem);
-//			}
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			model.addAttribute("msg", "수정 중 문제가 발생했습니다.");
-//			return "error/error";
-//		}
-//		return "user/profile";
-//	}
+
+	@DeleteMapping("/{userid}")
+	private ResponseEntity<String> delete(@PathVariable("userid") String userid) {
+		memberService.deleteMember(userid);
+		return new ResponseEntity<String>("success", HttpStatus.OK);
+	}
+
+	@PutMapping
+	private ResponseEntity<MemberDto> modify(@RequestBody MemberDto memberDto) {
+		try {
+			memberService.modifyMember(memberDto);
+			MemberDto updateMem = memberService.getMember(memberDto.getUserid());
+			if(updateMem != null) {				
+				return new ResponseEntity<MemberDto>(updateMem, HttpStatus.OK);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new ResponseEntity<MemberDto>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
 
 	@PostMapping("/join")
 	private ResponseEntity<String> join(@RequestBody MemberDto memberDto) {

@@ -12,6 +12,7 @@ const userStore = {
       phone: '',
       address: '',
     },
+    profileFlag:0,
   },
   getters: {},
   mutations: {
@@ -44,6 +45,9 @@ const userStore = {
       state.loginUser.phone = member.phone;
       state.loginUser.address = member.address;
     },
+    SET_PROFILE_FLAG(state, flag) {
+      state.profileFlag = flag;
+    }
   },
   actions: {
     init({ commit }) {
@@ -83,6 +87,22 @@ const userStore = {
           alert('회원가입 실패!');
         });
     },
+    modify({ commit, dispatch }, user) {
+      http
+      .put('/member', user,
+      {
+        headers: {
+          "jwt-auth-token": storage.getItem("jwt-auth-token")
+        }
+      })
+        .then((data) => {
+          commit('LOGIN', data.data);
+          alert('회원수정 성공!');
+        })
+        .catch(() => {
+          alert('회원수정 실패! 비밀번호를 확인해주세요');
+        });
+    },
     findpwd({ commit }, info) {
       http
         .post('/member/findpwd', info)
@@ -93,6 +113,27 @@ const userStore = {
           alert('비밀번호를 찾을 수 없습니다.');
         });
     },
+    async delete({ commit }, userid) {
+      await http
+        .delete('/member/'+ userid,
+        {
+          headers: {
+            "jwt-auth-token": storage.getItem("jwt-auth-token")
+          }
+        })
+        .then(() => {
+          storage.setItem('jwt-auth-token', '');
+          storage.setItem('login_user', '');
+          commit('SET_PROFILE_FLAG', 0);
+          alert('탈퇴 되었습니다.');
+        })
+        .catch(() => {
+          alert('탈퇴에 실패했습니다.');
+        });
+    },
+    setProfileFlag({ commit }, flag) {
+      commit('SET_PROFILE_FLAG', flag);
+    }
   },
 };
 

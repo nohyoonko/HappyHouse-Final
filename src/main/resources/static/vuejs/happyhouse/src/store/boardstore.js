@@ -27,24 +27,6 @@ const boardStore = {
           alert('Q&A 목록을 불러오는 중 문제가 발생했습니다.');
         });
     },
-    deleteBoard({ commit }, no) {
-      http
-        .delete(`/board/${no}`, {
-          headers: {
-            'jwt-auth-token': storage.getItem('jwt-auth-token'),
-          },
-        })
-        .then(({ data }) => {
-          let msg = '삭제 처리시 문제가 발생했습니다.';
-          if (data === 'success') {
-            msg = '삭제가 완료되었습니다.';
-          }
-          alert(msg);
-        })
-        .catch(() => {
-          alert('삭제 처리시 에러가 발생했습니다.');
-        });
-    },
   },
 };
 

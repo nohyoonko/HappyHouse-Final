@@ -13,7 +13,7 @@
           name="word"
           id="word"
           placeholder="Search"
-					v-model="word"
+          v-model="word"
         />
         <button
           class="btn"
@@ -28,7 +28,7 @@
     <!--테이블 시작-->
     <b-table
       id="my-table"
-			@row-clicked="noticeDetail"
+      @row-clicked="noticeDetail"
       :fields="fields"
       :items="notices"
       :per-page="perPage"
@@ -79,15 +79,15 @@
 </template>
 
 <script>
-import detailModal from '@/components/notice/DetailModal.vue';
-import ModifyModal from '@/components/notice/ModifyModal.vue';
-import DeleteModal from '@/components/notice/DeleteModal.vue';
-import CreateModal from '@/components/notice/CreateModal.vue';
-import { mapActions, mapState } from 'vuex';
-const noticeStore = 'noticeStore';
-const userStore = 'userStore';
+import detailModal from "@/components/notice/DetailModal.vue";
+import ModifyModal from "@/components/notice/ModifyModal.vue";
+import DeleteModal from "@/components/notice/DeleteModal.vue";
+import CreateModal from "@/components/notice/CreateModal.vue";
+import { mapActions, mapState } from "vuex";
+const noticeStore = "noticeStore";
+const userStore = "userStore";
 export default {
-  name: 'noticelist',
+  name: "noticelist",
   components: {
     detailModal,
     ModifyModal,
@@ -100,31 +100,31 @@ export default {
       currentPage: 1,
       items: [],
       fields: [
-        { key: 'articleno', label: '글번호' },
-        { key: 'subject', label: '제목' },
-        { key: 'userid', label: '작성자' },
-        { key: 'count', label: '조회수' },
-        { key: 'regtime', label: '작성일' },
-        { key: 'kind', label: '분류' },
+        { key: "articleno", label: "글번호" },
+        { key: "subject", label: "제목" },
+        { key: "userid", label: "작성자" },
+        { key: "count", label: "조회수" },
+        { key: "regtime", label: "작성일" },
+        { key: "kind", label: "분류" },
       ],
       showDetailModal: false,
-			selField:'articleno',
-			word:'',
+      selField: "articleno",
+      word: "",
       pageIndex: 0,
-      noticeItems:[],
+      noticeItems: [],
     };
   },
   computed: {
-    ...mapState(noticeStore, ['flag']),
-		...mapState(userStore, ['loginUser',]),
-		notices: {
-      get () {
+    ...mapState(noticeStore, ["flag"]),
+    ...mapState(userStore, ["loginUser"]),
+    notices: {
+      get() {
         return this.$store.getters["noticeStore/get_notices"];
       },
-      set (value) {
-        this.$store.commit('noticeStore/SET_NOTICES', value)
-      }
-  },
+      set(value) {
+        this.$store.commit("noticeStore/SET_NOTICES", value);
+      },
+    },
     rows() {
       return this.notices.length;
     },
@@ -132,20 +132,19 @@ export default {
   watch: {
     flag: function () {
       this.getList();
-      if(this.flag == 0)
-        this.$router.go();
+      if (this.flag == 0) this.$router.go();
     },
   },
   created: function () {
     this.getList(null);
   },
   methods: {
-    ...mapActions(noticeStore, ['getNotices','getNotice', 'setFlag']),
+    ...mapActions(noticeStore, ["getNotices", "getNotice", "setFlag"]),
     getList() {
-			let searchnotice = {
-				'key': this.selField,
-				'word': this.word,
-			};
+      let searchnotice = {
+        key: this.selField,
+        word: this.word,
+      };
       this.getNotices(searchnotice);
     },
     closeModal() {
@@ -161,13 +160,13 @@ export default {
     openModal() {
       this.setFlag(1);
     },
-		searchArticle(){
-			let searchnotice = {
-				'key': this.selField,
-				'word': this.word,
-			};
-			this.getNotices(searchnotice);
-		}
+    searchArticle() {
+      let searchnotice = {
+        key: this.selField,
+        word: this.word,
+      };
+      this.getNotices(searchnotice);
+    },
   },
 };
 </script>

@@ -3,31 +3,54 @@
     <div class="modal-mask">
       <div class="modal-wrapper">
         <div class="modal-container">
-
           <div class="modal-header">
-					<h4 class="modal-title">글 수정하기</h4>
-					<button type="button" class="close" data-dismiss="modal" @click="closeModal">&times;</button>
-				</div>
+            <h4 class="modal-title">글 수정하기</h4>
+            <button type="button" class="close" data-dismiss="modal" @click="closeModal">
+              &times;
+            </button>
+          </div>
 
           <!-- Modal body -->
-				<div class="modal-body" id="write-modal">
-					<form id="modify-form" method="post" action="${root}/notice/modify">
-						<input type="hidden" id="modify_articleno" name="articleno" value="">
-						<div class="form-group">
-							<label for="title">제목:</label> <input type="text"
-								class="form-control" id="modify_title" name="subject"
-								v-model="notice.subject" /> <label for="comment">내용:</label>
-							<textarea class="form-control" rows="5" id="modify_comment"
-								name="content" v-model="notice.content"></textarea>
-						</div>
-						<div class="text-right">
-							<button type="button" class="btn btn-sm btn-outline-info write-submit" 
-								@click="modNotice">수정</button>
-							<button type="button" class="ml-2 btn btn-sm btn-outline-danger " data-dismiss="modal" @click="closeModal">닫기</button>
-						</div>
-					</form>
-				</div>
-
+          <div class="modal-body" id="write-modal">
+            <form id="modify-form" method="post" action="${root}/notice/modify">
+              <input type="hidden" id="modify_articleno" name="articleno" value="" />
+              <div class="form-group">
+                <label for="title">제목:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="modify_title"
+                  name="subject"
+                  v-model="notice.subject"
+                />
+                <label for="comment">내용:</label>
+                <textarea
+                  class="form-control"
+                  rows="5"
+                  id="modify_comment"
+                  name="content"
+                  v-model="notice.content"
+                ></textarea>
+              </div>
+              <div class="text-right">
+                <button
+                  type="button"
+                  class="btn btn-sm btn-outline-info write-submit"
+                  @click="modNotice"
+                >
+                  수정
+                </button>
+                <button
+                  type="button"
+                  class="ml-2 btn btn-sm btn-outline-danger"
+                  data-dismiss="modal"
+                  @click="closeModal"
+                >
+                  닫기
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>
@@ -35,44 +58,43 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex';
+import { mapActions, mapState } from "vuex";
 // 토큰 및 사용자 정보를 저장하기 위해 세션 스토리지 사용.
-const userStore = 'userStore';
-const noticeStore = 'noticeStore';
+const userStore = "userStore";
+const noticeStore = "noticeStore";
 
 export default {
-    data() {
-        return {
-        }
-    },
-    computed:{
-      ...mapState(userStore,['loginUser']),
-      notice: {
-      get () {
+  data() {
+    return {};
+  },
+  computed: {
+    ...mapState(userStore, ["loginUser"]),
+    notice: {
+      get() {
         return this.$store.getters["noticeStore/get_notice"];
       },
-      set (value) {
-        this.$store.commit('noticeStore/SET_NOTICE', value)
-      }
-  },
+      set(value) {
+        this.$store.commit("noticeStore/SET_NOTICE", value);
+      },
     },
-    methods: {
-        ...mapActions(noticeStore, ['setFlag','getNotice','modifyNotice']),
+  },
+  methods: {
+    ...mapActions(noticeStore, ["setFlag", "getNotice", "modifyNotice"]),
     closeModal() {
       this.setFlag(0);
     },
     async modNotice() {
-      let newNotice ={
-        'articleno': this.notice.articleno,
-        'subject': this.notice.subject,
-        'content': this.notice.content,
+      let newNotice = {
+        articleno: this.notice.articleno,
+        subject: this.notice.subject,
+        content: this.notice.content,
       };
       await this.modifyNotice(newNotice);
       await this.getNotice(this.notice.articleno);
       this.setFlag(0);
     },
-    },
-}
+  },
+};
 </script>
 
 <style scoped>
@@ -83,9 +105,9 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, .5);
+  background-color: rgba(0, 0, 0, 0.5);
   display: table;
-  transition: opacity .3s ease;
+  transition: opacity 0.3s ease;
 }
 
 .modal-wrapper {
@@ -100,8 +122,8 @@ export default {
   padding: 20px 30px;
   background-color: #fff;
   border-radius: 2px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
-  transition: all .3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
+  transition: all 0.3s ease;
   font-family: Helvetica, Arial, sans-serif;
 }
 

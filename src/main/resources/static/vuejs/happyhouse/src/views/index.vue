@@ -1,7 +1,7 @@
 <template>
   <div id="index" class="main-body">
     <section class="container text-center mb-3">
-      <div class="page-header mt-5 pt-5">
+      <div class="page-header mt-4 pt-5">
         <h1 class="brand">HAPPY HOUSE</h1>
         <p style="font-weight: bolder; font-size: 15pt">어떤 집을 찾고 있나요?</p>
       </div>
@@ -33,34 +33,55 @@
       <!-- 동 검색 끝-->
       <index-map />
     </section>
-    <section style="background-color: white; padding: 20px">
-      <b-row class="mt-3 mb-3">
-        <b-col cols="3" align="center">
-          <div @click="showTopApts">
-            <h3 class="mt3">지금 가장 인기있는 {{ top }}의</h3>
-            <h3 class="mb-3">매물 구경하기 <b-icon icon="hand-index" font-scale="1"></b-icon></h3>
-          </div>
-          <index-interest-chart />
+    <b-container fluid style="background-color: white" class="pt-4">
+      <b-row class="mb-3 justify-content-center">
+        <b-col sm="4" class="mb-3">
+          <b-card border-variant="info" align="center" style="min-width: 20rem">
+            <div>
+              <h3 class="text-info">가장 인기 있는 동네 TOP 5</h3>
+              <h5>TOP 1 : {{ top }}</h5>
+            </div>
+            <index-interest-chart />
+          </b-card>
         </b-col>
-        <b-col cols="9">
-          <b-table hover :items="news"></b-table>
+        <b-col sm="4" class="mb-3">
+          <b-card
+            border-variant="info"
+            header="오늘의 뉴스"
+            header-text-variant="info"
+            header-border-variant="info"
+            header-tag="h4"
+            style="min-width: 20rem"
+          >
+            <ul>
+              <li v-for="(article, index) in news" :key="index" class="mb-3">
+                <b-card-title
+                  ><h5>
+                    <a :href="article.url">❍ {{ article.title }}</a>
+                  </h5></b-card-title
+                >
+                <b-card-sub-title>{{ article.summary.substr(0, 82) }}</b-card-sub-title>
+              </li>
+            </ul>
+          </b-card>
         </b-col>
       </b-row>
-    </section>
+    </b-container>
   </div>
 </template>
 
 <script>
-import http from "@/util/http-common";
-import IndexMap from "@/components/index/IndexMap.vue";
-import IndexInterestChart from "@/components/index/IndexInterestChart.vue";
-import { mapActions, mapState } from "vuex";
-const aptStore = "aptStore";
-const interestStore = "interestStore";
-const newsStore = "newsStore";
+import http from '@/util/http-common';
+import moment from 'moment';
+import IndexMap from '@/components/index/IndexMap.vue';
+import IndexInterestChart from '@/components/index/IndexInterestChart.vue';
+import { mapActions, mapState } from 'vuex';
+const aptStore = 'aptStore';
+const interestStore = 'interestStore';
+const newsStore = 'newsStore';
 
 export default {
-  name: "index",
+  name: 'index',
   components: {
     IndexMap,
     IndexInterestChart,
@@ -75,18 +96,22 @@ export default {
       selected_dong: null,
       apts: [],
       locs: [],
-      top: "",
+      top: '',
+      today: '',
     };
   },
   computed: {
-    ...mapState(interestStore, ["topinterests"]),
-    ...mapState(newsStore, ["news"]),
+    ...mapState(interestStore, ['topinterests']),
+    ...mapState(newsStore, ['news']),
   },
   watch: {
     topinterests: function () {
-      let topone = this.topinterests[0].address + "";
-      var jbSplit = topone.split(" ");
+      let topone = this.topinterests[0].address + '';
+      var jbSplit = topone.split(' ');
       this.top = jbSplit[2];
+    },
+    today: function () {
+      this.today = moment(new Date()).format('YYYY.MM.DD');
     },
   },
   created() {
@@ -96,22 +121,22 @@ export default {
         this.sidos = data;
       })
       .catch(() => {
-        alert("에러가 발생했습니다.");
+        alert('에러가 발생했습니다.');
       });
     this.getNews();
   },
   methods: {
     ...mapActions(aptStore, [
-      "setSidoList",
-      "setGugunList",
-      "setDongList",
-      "setAptList",
-      "addMarkerlocs",
-      "addSido",
-      "addGugun",
-      "addDong",
+      'setSidoList',
+      'setGugunList',
+      'setDongList',
+      'setAptList',
+      'addMarkerlocs',
+      'addSido',
+      'addGugun',
+      'addDong',
     ]),
-    ...mapActions(newsStore, ["getNews"]),
+    ...mapActions(newsStore, ['getNews']),
     getGugun() {
       http
         .get(`/aptrest/gugun/${this.selected_sido.sido_Code}`)
@@ -119,15 +144,15 @@ export default {
           this.guguns = data;
           this.locs = [];
           for (var i = 0; i < this.guguns.length; i++) {
-            var temp = { addr: "", addrtext: "" };
-            temp.addr = this.selected_sido.sido_Name + " " + this.guguns[i].gugun_Name;
+            var temp = { addr: '', addrtext: '' };
+            temp.addr = this.selected_sido.sido_Name + ' ' + this.guguns[i].gugun_Name;
             temp.addrtext = this.guguns[i].gugun_Name;
             this.locs[i] = temp;
           }
           this.addMarkerlocs(this.locs);
         })
         .catch(() => {
-          alert("에러가 발생했습니다.");
+          alert('에러가 발생했습니다.');
         });
     },
     getDong() {
@@ -137,12 +162,12 @@ export default {
           this.dongs = data;
           this.locs = [];
           for (var i = 0; i < this.dongs.length; i++) {
-            var temp = { addr: "", addrtext: "" };
+            var temp = { addr: '', addrtext: '' };
             temp.addr =
               this.selected_sido.sido_Name +
-              " " +
+              ' ' +
               this.selected_gugun.gugun_Name +
-              " " +
+              ' ' +
               this.dongs[i].dong;
             temp.addrtext = this.dongs[i].dong;
             this.locs[i] = temp;
@@ -150,11 +175,11 @@ export default {
           this.addMarkerlocs(this.locs);
         })
         .catch(() => {
-          alert("에러가 발생했습니다.");
+          alert('에러가 발생했습니다.');
         });
     },
     mvapt() {
-      var senddata = { dong: this.selected_dong.dong, aptname: "" };
+      var senddata = { dong: this.selected_dong.dong, aptname: '' };
       http
         .get(`/aptrest/aptlist`, { params: senddata })
         .then(({ data }) => {
@@ -168,33 +193,25 @@ export default {
           this.setAptList(this.apts);
           this.locs = [];
           for (var i = 0; i < this.apts.length; i++) {
-            var temp = { addr: "", addrtext: "" };
+            var temp = { addr: '', addrtext: '' };
             temp.addr =
               this.selected_sido.sido_Name +
-              " " +
+              ' ' +
               this.selected_gugun.gugun_Name +
-              " " +
+              ' ' +
               this.selected_dong.dong +
-              " " +
+              ' ' +
               this.apts[i].jibun;
             temp.addrtext = this.apts[i].aptName;
             this.locs[i] = temp;
           }
 
           this.addMarkerlocs(this.locs);
-          this.$router.push("/apt");
+          this.$router.push('/apt');
         })
         .catch(() => {
-          alert("에러가 발생했습니다.");
+          alert('에러가 발생했습니다.');
         });
-    },
-    showTopApts() {
-      let topone = this.topinterests[0].address + "";
-      var jbSplit = topone.split(" ");
-      this.addSido(jbSplit[0]);
-      this.addGugun(jbSplit[1]);
-      this.addDong(jbSplit[2]);
-      this.$router.push("/apt");
     },
   },
 };
@@ -207,7 +224,7 @@ export default {
 .main-body {
   height: 100%;
   overflow: hidden;
-  background-image: url("../assets/back.jpg");
+  background-image: url('../assets/back.jpg');
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -218,6 +235,12 @@ export default {
   font-weight: bold;
   color: white;
   text-shadow: 2px 2px 2px #000;
-  font-family: "Anton", sans-serif;
+  font-family: 'Anton', sans-serif;
+}
+a {
+  color: black;
+}
+a:hover {
+  color: #17a2b8;
 }
 </style>

@@ -1,10 +1,6 @@
 <template>
   <b-row id="index-map" class="justify-content-center">
-    <b-col
-      id="map"
-      class="mb-5"
-      style="width: 80vw; height: 50vh"
-    ></b-col>
+    <b-col id="map" style="width: 100vw; height: 60vh"></b-col>
   </b-row>
 </template>
 
@@ -45,18 +41,19 @@ export default {
         center: new kakao.maps.LatLng(37.5642135, 127.0016985),
         level: 8,
       };
-      
+
       var points = [];
       var cnt = 0;
       var map = new kakao.maps.Map(mapContainer, options);
       var geocoder = new window.kakao.maps.services.Geocoder();
 
-      	var imageSrc = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbG5zOnN2Z2pzPSJodHRwOi8vc3ZnanMuY29tL3N2Z2pzIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgeD0iMCIgeT0iMCIgdmlld0JveD0iMCAwIDUxMiA1MTIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMiA1MTIiIHhtbDpzcGFjZT0icHJlc2VydmUiIGNsYXNzPSIiPjxnPgo8cG9seWdvbiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHN0eWxlPSIiIHBvaW50cz0iNDMyLjEwNiwyNTAuNTM0IDQzMi4xMDYsNDcwLjAyMSAyOTYuNTc4LDQ3MC4wMjEgMjk2LjU3OCwzMzYuOTc1IDIyMS4zOTksMzM2Ljk3NSAgIDIyMS4zOTksNDcwLjAyMSA3OS44OTQsNDcwLjAyMSA3OS44OTQsMjUwLjUzNCAyNTYsMTE1LjA3NSAiIGZpbGw9IiM1ZWUxZjUiIGRhdGEtb3JpZ2luYWw9IiNmZmI3NGYiIGNsYXNzPSIiPjwvcG9seWdvbj4KPHBhdGggeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiBzdHlsZT0iIiBkPSJNNDM5LjQ4NSwxODMuMTM1VjkwLjMwNmgtNzQuMTY3djM1Ljc3MkwyNTYsNDEuOTc5TDAsMjM4LjkybDUzLjYzMyw2OS43MTJMMjU2LDE1Mi45NTkgIGwyMDIuMzY3LDE1NS42NzJMNTEyLDIzOC45Mkw0MzkuNDg1LDE4My4xMzV6IiBmaWxsPSIjMDBiNGNmIiBkYXRhLW9yaWdpbmFsPSIjZmY3ZDNjIiBjbGFzcz0iIj48L3BhdGg+Cjxwb2x5Z29uIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3R5bGU9IiIgcG9pbnRzPSI0MzIuMTA2LDI1MC41MzQgNDMyLjEwNiw0NzAuMDIxIDI5Ni41NzgsNDcwLjAyMSAyOTYuNTc4LDMzNi45NzUgMjU2LDMzNi45NzUgMjU2LDExNS4wNzUgICAiIGZpbGw9IiMyN2NhZTMiIGRhdGEtb3JpZ2luYWw9IiNmZjlhMDAiIGNsYXNzPSIiPjwvcG9seWdvbj4KPHBvbHlnb24geG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiBzdHlsZT0iIiBwb2ludHM9IjUxMiwyMzguOTIgNDU4LjM2NywzMDguNjMyIDI1NiwxNTIuOTU5IDI1Niw0MS45NzkgMzY1LjMxOCwxMjYuMDc4IDM2NS4zMTgsOTAuMzA2ICAgNDM5LjQ4NSw5MC4zMDYgNDM5LjQ4NSwxODMuMTM1ICIgZmlsbD0iIzAwOTdhZSIgZGF0YS1vcmlnaW5hbD0iI2ZmNGUxOSIgY2xhc3M9IiI+PC9wb2x5Z29uPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8L2c+PC9zdmc+",  
-						imageSize = new kakao.maps.Size(32, 33), // 마커이미지의 크기입니다
-						imageOption = {offset: new kakao.maps.Point(16, 16)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
-							
-				// 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
-					var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
+      var imageSrc =
+          "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbG5zOnN2Z2pzPSJodHRwOi8vc3ZnanMuY29tL3N2Z2pzIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgeD0iMCIgeT0iMCIgdmlld0JveD0iMCAwIDUxMiA1MTIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMiA1MTIiIHhtbDpzcGFjZT0icHJlc2VydmUiIGNsYXNzPSIiPjxnPgo8cG9seWdvbiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHN0eWxlPSIiIHBvaW50cz0iNDMyLjEwNiwyNTAuNTM0IDQzMi4xMDYsNDcwLjAyMSAyOTYuNTc4LDQ3MC4wMjEgMjk2LjU3OCwzMzYuOTc1IDIyMS4zOTksMzM2Ljk3NSAgIDIyMS4zOTksNDcwLjAyMSA3OS44OTQsNDcwLjAyMSA3OS44OTQsMjUwLjUzNCAyNTYsMTE1LjA3NSAiIGZpbGw9IiM1ZWUxZjUiIGRhdGEtb3JpZ2luYWw9IiNmZmI3NGYiIGNsYXNzPSIiPjwvcG9seWdvbj4KPHBhdGggeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiBzdHlsZT0iIiBkPSJNNDM5LjQ4NSwxODMuMTM1VjkwLjMwNmgtNzQuMTY3djM1Ljc3MkwyNTYsNDEuOTc5TDAsMjM4LjkybDUzLjYzMyw2OS43MTJMMjU2LDE1Mi45NTkgIGwyMDIuMzY3LDE1NS42NzJMNTEyLDIzOC45Mkw0MzkuNDg1LDE4My4xMzV6IiBmaWxsPSIjMDBiNGNmIiBkYXRhLW9yaWdpbmFsPSIjZmY3ZDNjIiBjbGFzcz0iIj48L3BhdGg+Cjxwb2x5Z29uIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3R5bGU9IiIgcG9pbnRzPSI0MzIuMTA2LDI1MC41MzQgNDMyLjEwNiw0NzAuMDIxIDI5Ni41NzgsNDcwLjAyMSAyOTYuNTc4LDMzNi45NzUgMjU2LDMzNi45NzUgMjU2LDExNS4wNzUgICAiIGZpbGw9IiMyN2NhZTMiIGRhdGEtb3JpZ2luYWw9IiNmZjlhMDAiIGNsYXNzPSIiPjwvcG9seWdvbj4KPHBvbHlnb24geG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiBzdHlsZT0iIiBwb2ludHM9IjUxMiwyMzguOTIgNDU4LjM2NywzMDguNjMyIDI1NiwxNTIuOTU5IDI1Niw0MS45NzkgMzY1LjMxOCwxMjYuMDc4IDM2NS4zMTgsOTAuMzA2ICAgNDM5LjQ4NSw5MC4zMDYgNDM5LjQ4NSwxODMuMTM1ICIgZmlsbD0iIzAwOTdhZSIgZGF0YS1vcmlnaW5hbD0iI2ZmNGUxOSIgY2xhc3M9IiI+PC9wb2x5Z29uPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8L2c+PC9zdmc+",
+        imageSize = new kakao.maps.Size(32, 33), // 마커이미지의 크기입니다
+        imageOption = { offset: new kakao.maps.Point(16, 16) }; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+
+      // 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
+      var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
 
       for (var i = 0; i < this.markerlocs.length; i++) {
         const text = this.markerlocs[i].addrtext;
@@ -86,7 +83,7 @@ export default {
               map: map,
               position: marker.getPosition(),
               xAnchor: 0.5,
-							yAnchor: 0.3,
+              yAnchor: 0.3,
             });
             overlay.setVisible(false);
 

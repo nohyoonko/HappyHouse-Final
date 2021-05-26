@@ -1,8 +1,8 @@
 <template>
-  <b-container v-if="apts && apts.length != 0" class="bv-example-row mt-3">
+  <b-container v-if="apts && apts.length != 0" class="bv-example-row mt-2">
     <apt-list-item v-for="(apt, index) in apts" :key="index" :apt="apt" />
   </b-container>
-  <b-container v-else class="bv-example-row mt-3">
+  <b-container v-else class="bv-example-row mt-2">
     <b-row>
       <b-col><b-alert show>아파트 목록이 없습니다.</b-alert></b-col>
     </b-row>
@@ -10,17 +10,17 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
-import AptListItem from '@/components/apt/AptListItem.vue';
-const aptStore = 'aptStore';
+import { mapState } from "vuex";
+import AptListItem from "@/components/apt/AptListItem.vue";
+const aptStore = "aptStore";
 
 export default {
-  name: 'AptList',
+  name: "AptList",
   components: {
     AptListItem,
   },
   computed: {
-    ...mapState(aptStore, ['apts']),
+    ...mapState(aptStore, ["apts"]),
   },
 };
 </script>

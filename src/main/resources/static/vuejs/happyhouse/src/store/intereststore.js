@@ -21,7 +21,11 @@ const interestStore = {
       state.interest = interest;
     },
     SET_TOP_FIVE_INTERESTS(state, topinterests) {
-      console.log("mutation");
+      for (let i = 0; i < 5; i++){
+        let topone = topinterests[i].address + "";
+        var jbSplit = topone.split(" ");
+        topinterests[i].address =jbSplit[1] +" " + jbSplit[2];
+      }
       state.topinterests = topinterests;
     }
   },

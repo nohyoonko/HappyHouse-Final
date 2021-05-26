@@ -108,7 +108,7 @@ export default {
     topinterests: function () {
       let topone = this.topinterests[0].address + "";
       var jbSplit = topone.split(" ");
-      this.top = jbSplit[2];
+      this.top = jbSplit[1];
     },
     today: function () {
       this.today = moment(new Date()).format("YYYY.MM.DD");

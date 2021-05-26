@@ -21,9 +21,9 @@
 								name="content" v-model="notice.content"></textarea>
 						</div>
 						<div class="text-right">
-							<button type="button" class="btn btn-primary write-submit"
-								@click="modNotice">Submit</button>
-							<button type="button" class="btn btn-danger" data-dismiss="modal" @click="closeModal">Close</button>
+							<button type="button" class="btn btn-sm btn-outline-info write-submit" 
+								@click="modNotice">수정</button>
+							<button type="button" class="ml-2 btn btn-sm btn-outline-danger " data-dismiss="modal" @click="closeModal">닫기</button>
 						</div>
 					</form>
 				</div>

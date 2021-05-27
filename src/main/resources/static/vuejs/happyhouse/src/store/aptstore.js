@@ -87,6 +87,11 @@ const aptStore = {
       state.searchName = searchName;
     },
     SET_APTDEALS(state, aptdeals) {
+      for (let i = 0; i < aptdeals.length; i++){
+        aptdeals[i].aptName = aptdeals[i].aptName + " " + aptdeals[i].floor + "층";
+        aptdeals[i].kind = '매매';
+        aptdeals[i].dealfinalday = aptdeals[i].dealYear + "년 " + aptdeals[i].dealMonth + "월 " + aptdeals[i].dealDay +"일";
+      }
       state.aptdeals = aptdeals;
     },
     SET_INTERESTS(state, interests) {

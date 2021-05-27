@@ -165,8 +165,12 @@ export default {
         this.selected_gugun.gugun_Name +
         " " +
         this.selected_dong.dong;
+      this.addSido(null);
       this.addInterest(addr);
-      this.reset();
+      this.addGugun(null);
+      this.addDong(null);
+      this.setGugunList(null);
+      this.setDongList(null);
     },
   },
 };

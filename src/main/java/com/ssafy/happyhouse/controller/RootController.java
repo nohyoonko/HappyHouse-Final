@@ -1,19 +1,19 @@
 package com.ssafy.happyhouse.controller;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class HomeController {
-	
-	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+public class RootController implements ErrorController {
 
-	@GetMapping("/")
-	public String home() {
-//		return "redirect:/index.html";
+	@Override
+	public String getErrorPath() {
+		return "/error";
+	}
+	
+	@GetMapping("/error")
+	public String redirectRoot() {
 		return "index.html";
 	}
 

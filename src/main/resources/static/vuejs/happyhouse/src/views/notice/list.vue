@@ -132,7 +132,7 @@ export default {
   watch: {
     flag: function () {
       this.getList();
-      if (this.flag == 0) this.$router.go();
+      if (this.flag == 0) this.$router.push("/notice");
     },
   },
   created: function () {

@@ -30,6 +30,7 @@
       </div>
       <!--테이블 시작-->
       <b-table
+        stacked="sm"
         id="my-table"
         @row-clicked="noticeDetail"
         :fields="fields"

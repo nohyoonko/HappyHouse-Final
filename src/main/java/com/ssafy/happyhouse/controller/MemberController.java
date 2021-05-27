@@ -59,7 +59,7 @@ public class MemberController {
 //	}
 //	
 	@PostMapping("/findpwd")
-	private ResponseEntity<String> findPwd(Map<String, String> map) {
+	private ResponseEntity<String> findPwd(@RequestBody Map<String, String> map) {
 		String result = null;
 		HttpStatus status = null;
 		

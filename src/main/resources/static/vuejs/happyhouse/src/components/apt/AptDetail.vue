@@ -9,43 +9,8 @@
       <b-form-input class="price-group" type="text" size="sm" v-model="max" />
       <b-button @click.prevent="getAptDeals" class="ml-1" size="sm">검색</b-button>
     </b-form>
-    <!-- <table class="table table-hover card-list">
-      <thead>
-        <tr>
-          <th>아파트 이름</th>
-          <th @click="changeAlign" style="cursor: pointer">
-            거래금액 <span style="color: gray; font-size: 13px">(단위:만원)</span>
-            <b-iconstack font-scale="1" variant="white">
-              <b-icon
-                v-if="sortbyprice == 1"
-                stacked
-                icon="caret-up-fill"
-                variant="dark"
-                scale="1"
-              ></b-icon>
-              <b-icon
-                v-if="!sortbyprice == 1"
-                stacked
-                icon="caret-down-fill"
-                variant="dark"
-                scale="1"
-              ></b-icon>
-            </b-iconstack>
-          </th>
-          <th>전용면적</th>
-          <th>거래구분</th>
-          <th>날짜</th>
-        </tr>
-      </thead>
-      <tbody v-if="aptdeals != null && aptdeals.length != 0" class="apt-info-list">
-        <apt-detail-item v-for="(aptdeal, index) in aptdeals" :key="index" :aptdeal="aptdeal" />
-      </tbody>
-      <tbody v-else class="apt-info-list">
-        <b-row>
-          <b-col><b-alert show>거래된 매물 목록이 없습니다.</b-alert></b-col>
-        </b-row>
-      </tbody> -->
-      <b-table
+
+    <b-table
       id="my-table"
       :items="aptdeals"
       :fields="fields"
@@ -53,20 +18,20 @@
       :per-page="perPage"
       :sort-by.sync="sortBy"
       :sort-desc.sync="sortDesc"
-      responsive="sm"
+      stacked="sm"
     >
-      </b-table>
+    </b-table>
     <b-pagination
-        v-model="currentPage"
-        :total-rows="rows"
-        :per-page="perPage"
-        aria-controls="my-table"
-        first-text="First"
-        prev-text="Prev"
-        next-text="Next"
-        last-text="Last"
-        align="center"
-      ></b-pagination>
+      v-model="currentPage"
+      :total-rows="rows"
+      :per-page="perPage"
+      aria-controls="my-table"
+      first-text="First"
+      prev-text="Prev"
+      next-text="Next"
+      last-text="Last"
+      align="center"
+    ></b-pagination>
 
     <!-- </table> -->
   </article>
@@ -92,10 +57,10 @@ export default {
       items: [],
       fields: [
         { key: "aptName", label: "아파트이름", sortable: true },
-        { key: "dealAmount", label: "거래금액" , sortable: true },
-        { key: "area", label: "전용면적", sortable: true  },
+        { key: "dealAmount", label: "거래금액", sortable: true },
+        { key: "area", label: "전용면적", sortable: true },
         { key: "kind", label: "거래구분", sortable: false },
-        { key: "dealfinalday", label: "날짜" , sortable: true },
+        { key: "dealfinalday", label: "날짜", sortable: true },
       ],
     };
   },

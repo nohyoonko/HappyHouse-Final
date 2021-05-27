@@ -141,7 +141,7 @@
             <div class="modal-footer">
               <slot name="footer">
                 <b-button type="submit" variant="success">수정</b-button>
-                <b-button type="button" variant="secondary" @click="closeModal">Close</b-button>
+                <b-button type="button" variant="secondary" @click="closeModal">닫기</b-button>
               </slot>
             </div>
           </b-form>

@@ -24,19 +24,19 @@
           <div class="modal-footer">
             <button
               type="button"
-              class="btn btn-primary mr-2"
+              class="btn btn-outline-primary mr-2"
               data-dismiss="modal"
               @click="delUser"
             >
-              Yes
+              예
             </button>
             <button
               type="button"
-              class="btn btn-secondary"
+              class="btn btn-outline-secondary"
               data-dismiss="modal"
               @click="closeModal"
             >
-              No
+              아니오
             </button>
           </div>
         </div>

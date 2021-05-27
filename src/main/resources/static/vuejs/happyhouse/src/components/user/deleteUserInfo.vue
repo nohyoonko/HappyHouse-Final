@@ -1,30 +1,44 @@
-
 <template>
   <transition name="modal">
     <div class="modal-mask">
       <div class="modal-wrapper">
         <div class="modal-container">
-
           <div class="modal-header">
-					<h5 class="modal-title">글 삭제</h5>
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close" @click="closeModal">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
+            <h5 class="modal-title">글 삭제</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+              @click="closeModal"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
 
           <!-- Modal body -->
-				<div class="modal-body">
-					<p>탈퇴 하시겠습니까?</p>
-				</div>
+          <div class="modal-body">
+            <p>탈퇴 하시겠습니까?</p>
+          </div>
 
-        <div class="modal-footer">
-					<button type="button" class="btn btn-primary mr-2" data-dismiss="modal"
-						@click="delUser">Yes</button>
-					<button type="button" class="btn btn-secondary"
-						data-dismiss="modal" @click="closeModal">No</button>
-				</div>
-
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-outline-primary mr-2"
+              data-dismiss="modal"
+              @click="delUser"
+            >
+              예
+            </button>
+            <button
+              type="button"
+              class="btn btn-outline-secondary"
+              data-dismiss="modal"
+              @click="closeModal"
+            >
+              아니오
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -32,34 +46,32 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex';
-const userStore = 'userStore';
+import { mapActions, mapState } from "vuex";
+const userStore = "userStore";
 
 export default {
-    props: {
-            form: {
-                type: Object
-            }
-        
+  props: {
+    form: {
+      type: Object,
     },
-    data() {
-        return {
-        }
+  },
+  data() {
+    return {};
+  },
+  computed: {
+    ...mapState(userStore, ["loginUser"]),
+  },
+  methods: {
+    ...mapActions(userStore, ["logout", "delete", "setProfileFlag"]),
+    closeModal() {
+      this.setProfileFlag(0);
     },
-    computed:{
-        ...mapState(userStore,['loginUser'])
+    delUser() {
+      this.delete(this.form.id);
+      this.logout().then(() => this.$router.push("/"));
     },
-    methods: {
-        ...mapActions(userStore, ['logout','delete','setProfileFlag']),
-        closeModal() {
-        this.setProfileFlag(0);
-        },
-        delUser(){
-          this.delete(this.form.id);
-          this.logout().then(() => this.$router.push('/'));
-        }
-  }
-}
+  },
+};
 </script>
 
 <style scoped>
@@ -70,9 +82,9 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, .5);
+  background-color: rgba(0, 0, 0, 0.5);
   display: table;
-  transition: opacity .3s ease;
+  transition: opacity 0.3s ease;
 }
 
 .modal-wrapper {
@@ -87,8 +99,8 @@ export default {
   padding: 20px 30px;
   background-color: #fff;
   border-radius: 2px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
-  transition: all .3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
+  transition: all 0.3s ease;
   font-family: Helvetica, Arial, sans-serif;
 }
 
@@ -104,7 +116,6 @@ export default {
 .modal-default-button {
   float: right;
 }
-
 
 .modal-enter {
   opacity: 0;

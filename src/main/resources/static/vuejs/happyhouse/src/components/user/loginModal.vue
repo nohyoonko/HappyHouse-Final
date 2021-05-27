@@ -53,26 +53,26 @@
 </template>
 
 <script>
-import http from '@/util/http-common';
-import { mapActions } from 'vuex';
-import FindPwdModal from './findPwdModal.vue';
+import http from "@/util/http-common";
+import { mapActions } from "vuex";
+import FindPwdModal from "./findPwdModal.vue";
 
 // 토큰 및 사용자 정보를 저장하기 위해 세션 스토리지 사용.
 const storage = window.sessionStorage;
-const userStore = 'userStore';
+const userStore = "userStore";
 
 export default {
   data() {
     return {
-      userid: '',
-      userpwd: '',
+      userid: "",
+      userpwd: "",
     };
   },
   components: {
     FindPwdModal,
   },
   methods: {
-    ...mapActions(userStore, ['login']),
+    ...mapActions(userStore, ["login"]),
     // getInfo() {
     //     http.post("/info",
     //     {
@@ -92,7 +92,7 @@ export default {
     callLogin() {
       const user = [this.userid, this.userpwd];
       this.login(user);
-      this.$emit('close');
+      this.$emit("close");
     },
   },
 };

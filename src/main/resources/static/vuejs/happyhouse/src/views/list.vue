@@ -38,6 +38,7 @@
 
       <b-table
         hover
+        stacked="sm"
         id="my-table"
         :items="items"
         :fields="fields"

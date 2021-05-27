@@ -14,7 +14,14 @@ export default {
     //markerlocs: {type: Array, required: true,},
   },
 	computed: {
-		...mapState(aptStore, ['markerlocs']),
+		markerlocs: {
+      get() {
+        return this.$store.getters["aptStore/get_markerlocs"];
+      },
+      set(value) {
+        this.$store.commit("aptStore/ADD_MARKERLOCS", value);
+      },
+		},
 	},
   mounted() {
     if (window.kakao && window.kakao.maps) {
@@ -26,9 +33,13 @@ export default {
       document.head.appendChild(script)
     }
   },
+	created() {
+		this.$store.commit("aptStore/ADD_MARKERLOCS", []);
+	},
 	watch:{
 		markerlocs: function(){
-			this.initMap();
+			if(this.markerlocs.length != 0)
+				this.initMap();
 		}
 	},
   methods: {

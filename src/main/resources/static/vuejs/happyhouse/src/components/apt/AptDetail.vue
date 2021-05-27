@@ -9,7 +9,7 @@
       <b-form-input class="price-group" type="text" size="sm" v-model="max" />
       <b-button @click.prevent="getAptDeals" class="ml-1" size="sm">검색</b-button>
     </b-form>
-    <table class="table table-hover card-list">
+    <!-- <table class="table table-hover card-list">
       <thead>
         <tr>
           <th>아파트 이름</th>
@@ -44,30 +44,66 @@
         <b-row>
           <b-col><b-alert show>거래된 매물 목록이 없습니다.</b-alert></b-col>
         </b-row>
-      </tbody>
-    </table>
+      </tbody> -->
+      <b-table
+      id="my-table"
+      :items="aptdeals"
+      :fields="fields"
+      :current-page="currentPage"
+      :per-page="perPage"
+      :sort-by.sync="sortBy"
+      :sort-desc.sync="sortDesc"
+      responsive="sm"
+    >
+      </b-table>
+    <b-pagination
+        v-model="currentPage"
+        :total-rows="rows"
+        :per-page="perPage"
+        aria-controls="my-table"
+        first-text="First"
+        prev-text="Prev"
+        next-text="Next"
+        last-text="Last"
+        align="center"
+      ></b-pagination>
+
+    <!-- </table> -->
   </article>
 </template>
 
 <script>
 import { mapState, mapActions } from "vuex";
-import AptDetailItem from "@/components/apt/AptDetailItem.vue";
+//import AptDetailItem from "@/components/apt/AptDetailItem.vue";
 const aptStore = "aptStore";
 
 export default {
   name: "AptDetail",
   components: {
-    AptDetailItem,
+    //AptDetailItem,
   },
   data() {
     return {
       sortbyprice: 1,
       min: "0",
       max: "990000",
+      perPage: 10,
+      currentPage: 1,
+      items: [],
+      fields: [
+        { key: "aptName", label: "아파트이름", sortable: true },
+        { key: "dealAmount", label: "거래금액" , sortable: true },
+        { key: "area", label: "전용면적", sortable: true  },
+        { key: "kind", label: "거래구분", sortable: false },
+        { key: "dealfinalday", label: "날짜" , sortable: true },
+      ],
     };
   },
   computed: {
     ...mapState(aptStore, ["apt", "apts", "aptdeals"]),
+    rows() {
+      return this.aptdeals.length;
+    },
   },
   watch: {
     apt: function () {
